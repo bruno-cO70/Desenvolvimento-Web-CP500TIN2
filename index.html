@@ -5,23 +5,25 @@
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>Loja de Bebidas - Página Inicial</title>
-    
+
     <link rel="stylesheet" href="style.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
     <link href="https://fonts.googleapis.com" rel="preconnect" />
     <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
-    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700;900&display=swap" rel="stylesheet" />
-    
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700;900&display=swap"
+        rel="stylesheet" />
+
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <script src="script.js"></script>
 </head>
 
-<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display dark">
+<body class="bg-background-dark text-slate-100 font-display dark">
     <div class="relative flex h-auto min-h-screen w-full flex-col group/design-root">
         <div class="layout-container flex h-full grow flex-col">
-            
-            <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-800 px-6 lg:px-10 py-3 sticky top-0 bg-background-dark/95 backdrop-blur-md z-50">
-                
+
+            <header
+                class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-800/60 px-6 lg:px-10 py-3 sticky top-0 bg-background-dark/95 backdrop-blur-md z-50">
                 <div class="flex items-center gap-6 lg:gap-8 flex-1">
                     <div class="flex items-center gap-3 text-slate-100">
                         <div class="size-6 text-primary-gold flex items-center justify-center">
@@ -30,11 +32,14 @@
                         <h2 class="text-slate-100 text-xl font-bold leading-tight tracking-tight">BevShop</h2>
                     </div>
                     <label class="hidden sm:flex flex-col h-10 w-full max-w-sm">
-                        <div class="flex w-full flex-1 items-stretch rounded-full h-full bg-slate-800">
+                        <div
+                            class="flex w-full flex-1 items-stretch rounded-full h-full bg-slate-800/80 border border-slate-700/50 hover:border-primary-gold/50 transition-colors">
                             <div class="text-slate-400 flex items-center justify-center pl-4 pr-2">
                                 <span class="material-symbols-outlined text-[20px]">search</span>
                             </div>
-                            <input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-r-full text-slate-100 focus:outline-0 focus:ring-0 border-none bg-transparent h-full placeholder:text-slate-400 px-2 text-sm font-normal" placeholder="Buscar bebidas..." />
+                            <input
+                                class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-r-full text-slate-100 focus:outline-0 focus:ring-0 border-none bg-transparent h-full placeholder:text-slate-400 px-2 text-sm font-normal"
+                                placeholder="Buscar bebidas premium..." />
                         </div>
                     </label>
                 </div>
@@ -42,181 +47,355 @@
                 <div class="flex items-center justify-end gap-6 lg:gap-8">
                     <nav class="hidden md:flex items-center gap-8">
                         <a class="text-primary-gold font-bold transition-colors text-sm" href="index.html">Início</a>
-                        <a class="text-slate-300 hover:text-primary-gold transition-colors text-sm font-medium" href="produtos.html">Produtos</a>
-                        <a class="text-slate-300 hover:text-primary-gold transition-colors text-sm font-medium" href="pagamento.html">Pagamento</a>
+                        <a class="text-slate-300 hover:text-primary-gold transition-colors text-sm font-medium"
+                            href="produtos.html">Produtos</a>
+                        <a class="text-slate-300 hover:text-primary-gold transition-colors text-sm font-medium"
+                            href="pagamento.html">Pagamento</a>
                     </nav>
                     <div class="flex items-center gap-3">
-                        <button onclick="abrirCarrinhoLateral()" class="flex size-10 cursor-pointer items-center justify-center rounded-full bg-slate-800 hover:bg-slate-700 transition-colors text-slate-100 relative">
+                        <button onclick="abrirCarrinhoLateral()"
+                            class="flex size-10 cursor-pointer items-center justify-center rounded-full bg-slate-800 hover:bg-slate-700 border border-slate-700/50 transition-colors text-slate-100 relative">
                             <span class="material-symbols-outlined text-[22px]">shopping_cart</span>
-                            <span class="cart-counter absolute top-0 right-0 flex h-4 w-4 items-center justify-center rounded-full bg-primary-gold text-slate-900 text-[10px] font-bold hidden">0</span>
+                            <span
+                                class="cart-counter absolute top-0 right-0 flex h-4 w-4 items-center justify-center rounded-full bg-primary-gold text-slate-900 text-[10px] font-bold hidden">0</span>
                         </button>
-                        <button class="flex size-10 cursor-pointer items-center justify-center rounded-full bg-slate-800 hover:bg-slate-700 transition-colors text-slate-100">
+                        <button
+                            class="flex size-10 cursor-pointer items-center justify-center rounded-full bg-slate-800 hover:bg-slate-700 border border-slate-700/50 transition-colors text-slate-100">
                             <span class="material-symbols-outlined text-[22px]">person</span>
                         </button>
                     </div>
                 </div>
             </header>
-            
-            <main class="flex-1 w-full max-w-[1200px] mx-auto px-6 py-8 flex flex-col gap-12">
-                <div class="@container">
-                    <div class="flex min-h-[560px] flex-col gap-6 bg-cover bg-center bg-no-repeat rounded-xl items-start justify-end px-12 pb-16 relative overflow-hidden" style='background-image: linear-gradient(rgba(16, 25, 34, 0.2) 0%, rgba(16, 25, 34, 0.9) 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuCjENMMHKSxNEP8KOxTcRWd1HjoAkye3UOr59QvWe8rW4rQSg6Ttt0Fne_q5-vbTXBPcX31x3QForxDRnb6UVGTrhCTQDaq3uuJFUeIDZVhUeq1hFam9Ckza0LWb7CyB7CBbVAJv8ImULX4jdX5O0KHZhe3Rq6ptkE0dvN6ETu9deJplgoXgqY5CP6Bu0olevhPfW-07lg9utChZQTkF_BlWWFnHMxmah53KagjOZffCxOWy56aCxEyTt0zPGR8X8fE5egkHE1-6c4m");'>
-                        <div class="relative z-10 flex flex-col gap-4 text-left max-w-2xl">
-                            <span class="text-primary-gold font-bold tracking-widest uppercase text-sm">Seleção Premium</span>
-                            <h1 class="text-white text-5xl font-black leading-tight tracking-[-0.033em]">Eleve Seu Paladar</h1>
-                            <h2 class="text-slate-300 text-lg font-normal leading-relaxed">
-                                Descubra um mundo selecionado de bebidas premium, desde vinhos finos envelhecidos até destilados artesanais e bebidas não alcoólicas exóticas.
-                            </h2>
-                            <div class="flex gap-4 mt-4">
-                                <button class="flex cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-8 bg-primary-gold hover:bg-primary-gold/90 transition-colors text-slate-900 text-base font-bold leading-normal tracking-[0.015em]">
-                                    Comprar Agora
-                                </button>
-                                <button class="flex cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-8 border border-slate-400 hover:border-slate-200 hover:text-white transition-colors text-slate-300 bg-transparent text-base font-bold leading-normal tracking-[0.015em]">
-                                    Ver Ofertas
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-                <section>
-                    <div class="flex flex-col items-stretch justify-start rounded-xl @xl:flex-row @xl:items-center bg-gradient-to-r from-slate-800 to-slate-900 border border-slate-700 overflow-hidden">
-                        <div class="w-full @xl:w-1/3 bg-center bg-no-repeat aspect-video bg-cover" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAB02my6j-QgrUBy1HfhpociZtzHotQzevg8xqt5w_fE3XQylVBJ0Hrwldja3KoZYmwxWOt7LagDi6yXVrVwKosJd-wA5I7mHpra8XTzdB_azhwL_SB95w86L25VRrXBZTHta435xjNPZVLLcElpNHu3g1109QFD-du6sCqvVKia-wjHBiGv52LLvn820ECAbUPdiwCab9O_DR-7C6MiIP7drHuAlz-4TzTa1TCjX7bzsgPYZE2FbJ6QSJU9vbwX96TKAxAXlHKZsdx");'></div>
-                        <div class="flex w-full min-w-72 grow flex-col items-start justify-center gap-2 py-8 px-8">
-                            <span class="text-primary-gold font-bold uppercase text-xs tracking-wider">Tempo Limitado</span>
-                            <h3 class="text-white text-2xl font-bold leading-tight">Especiais de Verão</h3>
-                            <p class="text-slate-400 text-base font-normal leading-normal mb-2 max-w-md">Refresque-se com nossa coleção exclusiva. Aproveite até 30% de desconto em bebidas selecionadas de verão e kits de coquetéis.</p>
-                            <button class="flex cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-6 bg-primary-gold/10 hover:bg-primary-gold/20 text-primary-gold border border-primary-gold/30 transition-colors text-sm font-semibold leading-normal">
-                                Aproveitar Oferta <span class="material-symbols-outlined text-[18px] ml-2">arrow_forward</span>
+            <main class="flex-1 w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-10 flex flex-col gap-16">
+
+                <section
+                    class="w-full bg-gradient-to-br from-slate-800 to-slate-900 rounded-3xl overflow-hidden border border-slate-700/50 shadow-2xl flex flex-col lg:flex-row items-center">
+                    <div class="w-full lg:w-1/2 p-8 sm:p-12 lg:p-16 flex flex-col gap-6">
+                        <div class="flex items-center gap-3">
+                            <span class="h-[2px] w-8 bg-primary-gold"></span>
+                            <span class="text-primary-gold font-bold tracking-widest uppercase text-xs">Lançamento
+                                Exclusivo</span>
+                        </div>
+                        <h1 class="text-white text-4xl sm:text-5xl lg:text-6xl font-black leading-tight tracking-tight">
+                            Cognac XO <br /><span class="text-primary-gold font-light italic">Imperial</span>
+                        </h1>
+                        <p class="text-slate-300 text-lg leading-relaxed max-w-md">
+                            Uma obra-prima envelhecida. Notas intensas de carvalho tostado, baunilha e frutas secas.
+                            Para os momentos que exigem o melhor.
+                        </p>
+                        <div class="flex items-baseline gap-4 mt-2">
+                            <span class="text-4xl font-bold text-white">R$ 450,00</span>
+                            <span class="text-slate-400 line-through mb-1">R$ 580,00</span>
+                        </div>
+                        <div class="flex flex-col sm:flex-row gap-4 mt-4">
+                            <button onclick="adicionarAoCarrinho(24)"
+                                class="flex-1 flex items-center justify-center gap-2 h-14 px-8 bg-primary-gold hover:bg-primary-gold/90 transition-all text-slate-900 text-base font-bold rounded-xl shadow-[0_0_20px_rgba(212,175,55,0.2)] hover:shadow-[0_0_30px_rgba(212,175,55,0.4)] hover:-translate-y-1">
+                                <span class="material-symbols-outlined">shopping_cart_checkout</span>
+                                Comprar Agora
                             </button>
+                            <a href="produtos.html"
+                                class="flex-1 flex items-center justify-center h-14 px-8 border border-slate-600 hover:border-primary-gold hover:text-primary-gold transition-all text-white bg-transparent text-base font-bold rounded-xl">
+                                Ver Coleção
+                            </a>
                         </div>
+                    </div>
+
+                    <div class="w-full lg:w-1/2 h-[400px] lg:h-[600px] bg-cover bg-center"
+                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCeMVXsryX_maWwvCCNqY79WuOBORz2z5rDA1dwzF-W1EBEHyOtsrhavVUHftr20nWQf492Y6Xyuv9gyF4GWvH9SODo2NLdPXhnnlYGIuTaTXWxlQpf2iXtWTMXvI2r_xRs_HlmBeND29Rk8ySXu1s4j8KD6Pdq_Ch8KQX20nAK7DPQvsMjKse1VGP3A5RZfAD1MRf2zDMN8RBRMZk4BBPDUpA3oZxqmFEaAEkvnGGpXzK7XaHtzH32HyLIeoa7G0h3ur-Fych03d0b");'>
                     </div>
                 </section>
 
                 <section>
-                    <div class="flex items-center justify-between mb-6">
-                        <h2 class="text-slate-100 text-2xl font-bold leading-tight tracking-[-0.015em]">Categorias em Destaque</h2>
-                        <a class="text-primary-gold hover:text-primary-gold/80 text-sm font-medium flex items-center" href="produtos.html">Ver Tudo <span class="material-symbols-outlined text-[16px] ml-1">chevron_right</span></a>
+                    <div class="flex items-center justify-between mb-8">
+                        <h2 class="text-slate-100 text-3xl font-bold leading-tight tracking-tight">Nossas Categorias
+                        </h2>
+                        <a class="text-primary-gold hover:text-primary-gold/80 text-sm font-bold flex items-center transition-colors uppercase tracking-wider"
+                            href="produtos.html">Ver Tudo <span
+                                class="material-symbols-outlined text-[18px] ml-1">arrow_forward</span></a>
                     </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                        <a class="group relative h-64 rounded-xl overflow-hidden flex items-center justify-center" href="produtos.html">
-                            <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCCnO6PG0qPucWBUffv8VHtd4cz3aOtFyic1su5ON3XctA7Q7280kkACFBmzGW_qYxdqxUdWeZuwl3RKfbrAlXBXWr-cZwy4WwTjT-b9S4sWXPPy6p4JiOFh1NitZB-Req-qdfJJkXFav27PwtpOAZgQ8WtadNvsRFzONZ00G_q_rBrTJAIRt3XwHoqJqoOpIf6R_fcqf3yoacD4ceSOej-NbTdA_KL5rlvASMMctTEvo4cggvelOdnjqmn756N16g15t-lotCKsbjk");'></div>
-                            <div class="absolute inset-0 bg-black/50 group-hover:bg-black/40 transition-colors"></div>
-                            <div class="relative z-10 flex flex-col items-center">
-                                <span class="material-symbols-outlined text-[40px] text-primary-gold mb-2">wine_bar</span>
-                                <h3 class="text-white text-xl font-bold">Vinhos</h3>
+                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+                        <a class="group relative h-48 sm:h-64 rounded-2xl overflow-hidden flex items-center justify-center border border-slate-800"
+                            href="produtos.html">
+                            <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCCnO6PG0qPucWBUffv8VHtd4cz3aOtFyic1su5ON3XctA7Q7280kkACFBmzGW_qYxdqxUdWeZuwl3RKfbrAlXBXWr-cZwy4WwTjT-b9S4sWXPPy6p4JiOFh1NitZB-Req-qdfJJkXFav27PwtpOAZgQ8WtadNvsRFzONZ00G_q_rBrTJAIRt3XwHoqJqoOpIf6R_fcqf3yoacD4ceSOej-NbTdA_KL5rlvASMMctTEvo4cggvelOdnjqmn756N16g15t-lotCKsbjk");'>
+                            </div>
+                            <div
+                                class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent group-hover:from-slate-900/90 transition-all">
+                            </div>
+                            <div class="relative z-10 flex flex-col items-center mt-12">
+                                <span
+                                    class="material-symbols-outlined text-[40px] text-primary-gold mb-2 group-hover:-translate-y-2 transition-transform duration-300">wine_bar</span>
+                                <h3 class="text-white text-lg sm:text-xl font-bold">Vinhos</h3>
                             </div>
                         </a>
-                        <a class="group relative h-64 rounded-xl overflow-hidden flex items-center justify-center" href="produtos.html">
-                            <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDmayXBvNPJq7j4Ea3C1foFHk6wclt6-P_1DznwYPsPgomfPOX95U264baejz6AzyutIuaDAvbkTzm4rHDWmZ6oaJfu7JP03fDRxU6HqEXpow51WLlLqgAf1lAfcXfXOI127uifC5dI8YNDIyttkCOi3stUZkRvF4-XwNt_TRk2cnLU2uacRaz0MR-EgjDJnPFA8CB7LNOsAx9mE_QyOryOKFAEUQITYMLsOczS27SotkmHU_5_uTzQ3BtVNDoD65lj6cC3O7-CE9RV");'></div>
-                            <div class="absolute inset-0 bg-black/50 group-hover:bg-black/40 transition-colors"></div>
-                            <div class="relative z-10 flex flex-col items-center">
-                                <span class="material-symbols-outlined text-[40px] text-primary-gold mb-2">sports_bar</span>
-                                <h3 class="text-white text-xl font-bold">Cervejas</h3>
+                        <a class="group relative h-48 sm:h-64 rounded-2xl overflow-hidden flex items-center justify-center border border-slate-800"
+                            href="produtos.html">
+                            <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDmayXBvNPJq7j4Ea3C1foFHk6wclt6-P_1DznwYPsPgomfPOX95U264baejz6AzyutIuaDAvbkTzm4rHDWmZ6oaJfu7JP03fDRxU6HqEXpow51WLlLqgAf1lAfcXfXOI127uifC5dI8YNDIyttkCOi3stUZkRvF4-XwNt_TRk2cnLU2uacRaz0MR-EgjDJnPFA8CB7LNOsAx9mE_QyOryOKFAEUQITYMLsOczS27SotkmHU_5_uTzQ3BtVNDoD65lj6cC3O7-CE9RV");'>
+                            </div>
+                            <div
+                                class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent group-hover:from-slate-900/90 transition-all">
+                            </div>
+                            <div class="relative z-10 flex flex-col items-center mt-12">
+                                <span
+                                    class="material-symbols-outlined text-[40px] text-primary-gold mb-2 group-hover:-translate-y-2 transition-transform duration-300">sports_bar</span>
+                                <h3 class="text-white text-lg sm:text-xl font-bold">Cervejas</h3>
                             </div>
                         </a>
-                        <a class="group relative h-64 rounded-xl overflow-hidden flex items-center justify-center" href="produtos.html">
-                            <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDdOarz5LMyK7ZNIDdDV0WAqO6mLH0sbt_mAzxmmnCO0D8LPy_382jmFswp4w3Tflc1iWzX-atcOFdscr7KfHMVTfrGSScCDzx5ihkSyL5XrH1CZvDZwQr-9AoR8j1kDgHy1rkrbe3SKWlfFWkj7YAyV17XIDqKp64ysEQfEelgFTAEgP2UOBwXs8M51TgwxrYpPR_R5OHLaPc7Xbh5Tlj2cnCt71p4cJ-RXHdqSrNgAdO7bzUw0biDayiH7nteyk2T0SwAZrNX05Un");'></div>
-                            <div class="absolute inset-0 bg-black/50 group-hover:bg-black/40 transition-colors"></div>
-                            <div class="relative z-10 flex flex-col items-center">
-                                <span class="material-symbols-outlined text-[40px] text-primary-gold mb-2">local_drink</span>
-                                <h3 class="text-white text-xl font-bold">Destilados</h3>
+                        <a class="group relative h-48 sm:h-64 rounded-2xl overflow-hidden flex items-center justify-center border border-slate-800"
+                            href="produtos.html">
+                            <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDdOarz5LMyK7ZNIDdDV0WAqO6mLH0sbt_mAzxmmnCO0D8LPy_382jmFswp4w3Tflc1iWzX-atcOFdscr7KfHMVTfrGSScCDzx5ihkSyL5XrH1CZvDZwQr-9AoR8j1kDgHy1rkrbe3SKWlfFWkj7YAyV17XIDqKp64ysEQfEelgFTAEgP2UOBwXs8M51TgwxrYpPR_R5OHLaPc7Xbh5Tlj2cnCt71p4cJ-RXHdqSrNgAdO7bzUw0biDayiH7nteyk2T0SwAZrNX05Un");'>
+                            </div>
+                            <div
+                                class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent group-hover:from-slate-900/90 transition-all">
+                            </div>
+                            <div class="relative z-10 flex flex-col items-center mt-12">
+                                <span
+                                    class="material-symbols-outlined text-[40px] text-primary-gold mb-2 group-hover:-translate-y-2 transition-transform duration-300">local_drink</span>
+                                <h3 class="text-white text-lg sm:text-xl font-bold">Destilados</h3>
                             </div>
                         </a>
-                        <a class="group relative h-64 rounded-xl overflow-hidden flex items-center justify-center" href="produtos.html">
-                            <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCkT1Zb50bye_HvY7ckZBWalFfwgan4UcHSUG6jRFgjXAH5diJkbvVH18pybn7ey8yWekDRz7fssmRWyImuJu-lDm2IZQMKhvPeVT4vV82Lq8Oug9Xh2gWbCBOgVOwUsllQx5w_SteegvjGr-vXCHqhxSyvzNk7Cc4Z8AwHpn5sEXecxuPfxpbonAElwPY1KLmivF7fNgXPtnv2PY7-xry0rMOjRuJCoX8gL_SS4hv3ro3dXkdGV8yMntcxFLdGfzKiKY05JmESsH4x");'></div>
-                            <div class="absolute inset-0 bg-black/50 group-hover:bg-black/40 transition-colors"></div>
-                            <div class="relative z-10 flex flex-col items-center">
-                                <span class="material-symbols-outlined text-[40px] text-primary-gold mb-2">water_drop</span>
-                                <h3 class="text-white text-xl font-bold">Não Alcoólicos</h3>
+                        <a class="group relative h-48 sm:h-64 rounded-2xl overflow-hidden flex items-center justify-center border border-slate-800"
+                            href="produtos.html">
+                            <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCkT1Zb50bye_HvY7ckZBWalFfwgan4UcHSUG6jRFgjXAH5diJkbvVH18pybn7ey8yWekDRz7fssmRWyImuJu-lDm2IZQMKhvPeVT4vV82Lq8Oug9Xh2gWbCBOgVOwUsllQx5w_SteegvjGr-vXCHqhxSyvzNk7Cc4Z8AwHpn5sEXecxuPfxpbonAElwPY1KLmivF7fNgXPtnv2PY7-xry0rMOjRuJCoX8gL_SS4hv3ro3dXkdGV8yMntcxFLdGfzKiKY05JmESsH4x");'>
+                            </div>
+                            <div
+                                class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent group-hover:from-slate-900/90 transition-all">
+                            </div>
+                            <div class="relative z-10 flex flex-col items-center mt-12">
+                                <span
+                                    class="material-symbols-outlined text-[40px] text-primary-gold mb-2 group-hover:-translate-y-2 transition-transform duration-300">water_drop</span>
+                                <h3 class="text-white text-lg sm:text-xl font-bold">Sem Álcool</h3>
                             </div>
                         </a>
                     </div>
                 </section>
 
                 <section>
-                    <div class="flex items-center justify-between mb-6">
-                        <h2 class="text-slate-100 text-2xl font-bold leading-tight tracking-[-0.015em]">Mais Vendidos</h2>
-                        <div class="flex gap-2">
-                            <button class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-slate-300 hover:text-white hover:bg-slate-700"><span class="material-symbols-outlined text-[20px]">chevron_left</span></button>
-                            <button class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-slate-300 hover:text-white hover:bg-slate-700"><span class="material-symbols-outlined text-[20px]">chevron_right</span></button>
-                        </div>
+                    <div class="flex items-center justify-between mb-8">
+                        <h2 class="text-slate-100 text-3xl font-bold leading-tight tracking-tight">Mais Vendidos</h2>
                     </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-                        
-                        <div class="flex flex-col gap-3 group">
-                            <div class="w-full aspect-[4/5] bg-slate-800 rounded-xl flex items-center justify-center relative overflow-hidden">
-                                <div class="absolute top-3 left-3 bg-primary-gold text-slate-900 text-xs font-bold px-2 py-1 rounded">Mais Vendido</div>
-                                <div class="w-full h-full bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCeMVXsryX_maWwvCCNqY79WuOBORz2z5rDA1dwzF-W1EBEHyOtsrhavVUHftr20nWQf492Y6Xyuv9gyF4GWvH9SODo2NLdPXhnnlYGIuTaTXWxlQpf2iXtWTMXvI2r_xRs_HlmBeND29Rk8ySXu1s4j8KD6Pdq_Ch8KQX20nAK7DPQvsMjKse1VGP3A5RZfAD1MRf2zDMN8RBRMZk4BBPDUpA3oZxqmFEaAEkvnGGpXzK7XaHtzH32HyLIeoa7G0h3ur-Fych03d0b");'></div>
-                                <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                    <button onclick="adicionarAoCarrinho(6)" class="bg-primary-gold text-slate-900 px-4 py-2 rounded-lg font-bold text-sm transform translate-y-4 group-hover:translate-y-0 transition-all">Adicionar ao Carrinho</button>
-                                </div>
-                            </div>
-                            <div>
-                                <h4 class="text-slate-100 font-bold text-base truncate">Highland Reserve 12 Anos</h4>
-                                <p class="text-slate-400 text-sm mb-1">Whisky Single Malt</p>
-                                <p class="text-primary-gold font-bold text-lg">R$ 299,99</p>
-                            </div>
-                        </div>
 
-                        <div class="flex flex-col gap-3 group">
-                            <div class="w-full aspect-[4/5] bg-slate-800 rounded-xl flex items-center justify-center relative overflow-hidden">
-                                <div class="w-full h-full bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCb7LsaaXp09THdtf5dMNCDhpSdjpaB7EBKb-Js75QXWUT-g4-wVDq4b7oq4XjpcxhqkpZAba_I_DYu2Par2QLMpc4u-uNAzlsM0w-XbRmy3W57crtmyVLz_faedVucZZsswR67eFjnbna3QqknTJ1gUMRtYIJHPc_iJLfKcVTBfyiAfT57QY5GTH2YLIgIiL8ZWtqr-PC3t_wYz3gdFtju839EQ-JeXgMCljI_-SC_SSevRhweIKMPh1rzOqlrMcWu0L-zfPJWt36m");'></div>
-                                <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                    <button onclick="adicionarAoCarrinho(7)" class="bg-primary-gold text-slate-900 px-4 py-2 rounded-lg font-bold text-sm transform translate-y-4 group-hover:translate-y-0 transition-all">Adicionar ao Carrinho</button>
-                                </div>
-                            </div>
-                            <div>
-                                <h4 class="text-slate-100 font-bold text-base truncate">Botanical Bliss Gin</h4>
-                                <p class="text-slate-400 text-sm mb-1">London Dry Gin</p>
-                                <p class="text-primary-gold font-bold text-lg">R$ 189,50</p>
-                            </div>
-                        </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
 
-                        <div class="flex flex-col gap-3 group">
-                            <div class="w-full aspect-[4/5] bg-slate-800 rounded-xl flex items-center justify-center relative overflow-hidden">
-                                <div class="absolute top-3 left-3 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded">Promoção</div>
-                                <div class="w-full h-full bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBGFWWLWL4CsWGHsJRvekmNsQuxbhtfnrukOGxx3gmzoxkFjG6Sllq99II3BNjG5s3t4cjeju8n2tPjoM-qxa2_I9m0d4oMARS-QGgLAwC6vWzHZLO0cik0QObYMvS2KPV1rZNsF33YvYb8fHt351srGoCsgoOA3zs8gt0_0WNNy1VwHamCDBzDeh91pECVf50gNTE3ug1cZoc1oAx2M3QPAm3IfUobcuQOEXQmMjKfaOzWFzkWKkOMXGdo1EjY3ADISJWXw4YaYPxa");'></div>
-                                <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                    <button onclick="adicionarAoCarrinho(2)" class="bg-primary-gold text-slate-900 px-4 py-2 rounded-lg font-bold text-sm transform translate-y-4 group-hover:translate-y-0 transition-all">Adicionar ao Carrinho</button>
-                                </div>
+                        <div
+                            class="group flex flex-col bg-slate-900 rounded-2xl border border-slate-800 overflow-hidden hover:border-slate-600 transition-colors duration-300 p-4">
+                            <div
+                                class="w-full aspect-[4/5] bg-slate-800/50 rounded-xl flex items-center justify-center relative overflow-hidden mb-4">
+                                <div
+                                    class="absolute top-3 left-3 bg-primary-gold text-slate-900 text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider z-10">
+                                    Mais Vendido</div>
+                                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCeMVXsryX_maWwvCCNqY79WuOBORz2z5rDA1dwzF-W1EBEHyOtsrhavVUHftr20nWQf492Y6Xyuv9gyF4GWvH9SODo2NLdPXhnnlYGIuTaTXWxlQpf2iXtWTMXvI2r_xRs_HlmBeND29Rk8ySXu1s4j8KD6Pdq_Ch8KQX20nAK7DPQvsMjKse1VGP3A5RZfAD1MRf2zDMN8RBRMZk4BBPDUpA3oZxqmFEaAEkvnGGpXzK7XaHtzH32HyLIeoa7G0h3ur-Fych03d0b"
+                                    class="h-full object-contain group-hover:scale-110 transition-transform duration-700"
+                                    alt="Highland Reserve">
                             </div>
-                            <div>
-                                <h4 class="text-slate-100 font-bold text-base truncate">Crimson Valley Cabernet</h4>
-                                <p class="text-slate-400 text-sm mb-1">Vinho Tinto</p>
-                                <div class="flex items-center gap-2">
-                                    <p class="text-primary-gold font-bold text-lg">R$ 89,00</p>
-                                    <p class="text-slate-500 line-through text-sm">R$ 110,00</p>
+                            <div class="flex flex-col grow">
+                                <p class="text-slate-400 text-xs font-semibold mb-1 uppercase tracking-wider">Destilado
+                                </p>
+                                <h4 class="text-slate-100 font-bold text-base leading-tight mb-3">Highland Reserve 12
+                                    Anos</h4>
+                                <div class="mt-auto flex items-center justify-between">
+                                    <p class="text-primary-gold font-bold text-xl">R$ 299,99</p>
+                                    <button onclick="adicionarAoCarrinho(6)"
+                                        class="w-10 h-10 rounded-lg bg-slate-800 hover:bg-primary-gold text-white hover:text-slate-900 flex items-center justify-center transition-colors">
+                                        <span class="material-symbols-outlined">add_shopping_cart</span>
+                                    </button>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="flex flex-col gap-3 group">
-                            <div class="w-full aspect-[4/5] bg-slate-800 rounded-xl flex items-center justify-center relative overflow-hidden">
-                                <div class="w-full h-full bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBt7rci-cosEmK9Q37bsfza8jXF7AhwMzAyDg676MDvg4mMmRuelXYOA6H9BumldPzIFV46DgQEPV83L_j3z5J0H5UIYx8r8USqf43Ak6AG_Z_V04ouVqf3gmGnkDYm_NzF3zJ4pfaP_auDjKkV4avWh3jK8MarlHTftgClCOEzmPIyYck-ohdkTUgg3G6NJb2soG9tZWSR-3HAJBhYAldELLR1_litGXoUGydYshDJ2mh3ur6sNQZmLw7UFIHtPfjsc7PXIR0vokaL");'></div>
-                                <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                    <button onclick="adicionarAoCarrinho(11)" class="bg-primary-gold text-slate-900 px-4 py-2 rounded-lg font-bold text-sm transform translate-y-4 group-hover:translate-y-0 transition-all">Adicionar ao Carrinho</button>
+                        <div
+                            class="group flex flex-col bg-slate-900 rounded-2xl border border-slate-800 overflow-hidden hover:border-slate-600 transition-colors duration-300 p-4">
+                            <div
+                                class="w-full aspect-[4/5] bg-slate-800/50 rounded-xl flex items-center justify-center relative overflow-hidden mb-4">
+                                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAEI0pi0mmvU6skD6uZiu71J1zawmMCAv2tkAu4OIRv8B-IxbC57VpeBsoTbEBHpfMnrP-erSEHFiefpAU9x_FGY4Nx6-arj0_HKV_2IdMQbAMpNEqeF47r5bpFHC2YYSijbI4GUyXoqtO_I3OCJOlcAtJmsYCLEvYMl0GgDPgaH3oqhGi8UaesjJQ_2IwrLxu_gJqWmUqJKY2WBZyPKtnnpnr31I4IhlNyFW006oy9KDF-LwXjR48yroU05vKjjJb0PstPjrq0-7Bz"
+                                    class="h-full object-contain group-hover:scale-110 transition-transform duration-700"
+                                    alt="Château Margaux">
+                            </div>
+                            <div class="flex flex-col grow">
+                                <p class="text-slate-400 text-xs font-semibold mb-1 uppercase tracking-wider">Vinho</p>
+                                <h4 class="text-slate-100 font-bold text-base leading-tight mb-3">Château Margaux Grand
+                                    Cru 2015</h4>
+                                <div class="mt-auto flex items-center justify-between">
+                                    <div class="flex flex-col">
+                                        <span class="text-xs text-slate-500 line-through">R$ 180,00</span>
+                                        <p class="text-primary-gold font-bold text-xl">R$ 145,00</p>
+                                    </div>
+                                    <button onclick="adicionarAoCarrinho(1)"
+                                        class="w-10 h-10 rounded-lg bg-slate-800 hover:bg-primary-gold text-white hover:text-slate-900 flex items-center justify-center transition-colors">
+                                        <span class="material-symbols-outlined">add_shopping_cart</span>
+                                    </button>
                                 </div>
                             </div>
-                            <div>
-                                <h4 class="text-slate-100 font-bold text-base truncate">Hazy Horizon IPA</h4>
-                                <p class="text-slate-400 text-sm mb-1">Cerveja Artesanal - Pack com 6</p>
-                                <p class="text-primary-gold font-bold text-lg">R$ 74,99</p>
+                        </div>
+
+                        <div
+                            class="group flex flex-col bg-slate-900 rounded-2xl border border-slate-800 overflow-hidden hover:border-slate-600 transition-colors duration-300 p-4">
+                            <div
+                                class="w-full aspect-[4/5] bg-slate-800/50 rounded-xl flex items-center justify-center relative overflow-hidden mb-4">
+                                <div
+                                    class="absolute top-3 left-3 bg-red-500 text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider z-10">
+                                    Promoção</div>
+                                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBGFWWLWL4CsWGHsJRvekmNsQuxbhtfnrukOGxx3gmzoxkFjG6Sllq99II3BNjG5s3t4cjeju8n2tPjoM-qxa2_I9m0d4oMARS-QGgLAwC6vWzHZLO0cik0QObYMvS2KPV1rZNsF33YvYb8fHt351srGoCsgoOA3zs8gt0_0WNNy1VwHamCDBzDeh91pECVf50gNTE3ug1cZoc1oAx2M3QPAm3IfUobcuQOEXQmMjKfaOzWFzkWKkOMXGdo1EjY3ADISJWXw4YaYPxa"
+                                    class="h-full object-contain group-hover:scale-110 transition-transform duration-700"
+                                    alt="Crimson Valley">
+                            </div>
+                            <div class="flex flex-col grow">
+                                <p class="text-slate-400 text-xs font-semibold mb-1 uppercase tracking-wider">Vinho</p>
+                                <h4 class="text-slate-100 font-bold text-base leading-tight mb-3">Crimson Valley
+                                    Cabernet</h4>
+                                <div class="mt-auto flex items-center justify-between">
+                                    <div class="flex flex-col">
+                                        <span class="text-xs text-slate-500 line-through">R$ 110,00</span>
+                                        <p class="text-primary-gold font-bold text-xl">R$ 89,00</p>
+                                    </div>
+                                    <button onclick="adicionarAoCarrinho(2)"
+                                        class="w-10 h-10 rounded-lg bg-slate-800 hover:bg-primary-gold text-white hover:text-slate-900 flex items-center justify-center transition-colors">
+                                        <span class="material-symbols-outlined">add_shopping_cart</span>
+                                    </button>
+                                </div>
                             </div>
                         </div>
+
+                        <div
+                            class="group flex flex-col bg-slate-900 rounded-2xl border border-slate-800 overflow-hidden hover:border-slate-600 transition-colors duration-300 p-4">
+                            <div
+                                class="w-full aspect-[4/5] bg-slate-800/50 rounded-xl flex items-center justify-center relative overflow-hidden mb-4">
+                                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBt7rci-cosEmK9Q37bsfza8jXF7AhwMzAyDg676MDvg4mMmRuelXYOA6H9BumldPzIFV46DgQEPV83L_j3z5J0H5UIYx8r8USqf43Ak6AG_Z_V04ouVqf3gmGnkDYm_NzF3zJ4pfaP_auDjKkV4avWh3jK8MarlHTftgClCOEzmPIyYck-ohdkTUgg3G6NJb2soG9tZWSR-3HAJBhYAldELLR1_litGXoUGydYshDJ2mh3ur6sNQZmLw7UFIHtPfjsc7PXIR0vokaL"
+                                    class="h-full object-contain group-hover:scale-110 transition-transform duration-700"
+                                    alt="Hazy Horizon IPA">
+                            </div>
+                            <div class="flex flex-col grow">
+                                <p class="text-slate-400 text-xs font-semibold mb-1 uppercase tracking-wider">Cerveja
+                                </p>
+                                <h4 class="text-slate-100 font-bold text-base leading-tight mb-3">Hazy Horizon IPA -
+                                    Pack 6</h4>
+                                <div class="mt-auto flex items-center justify-between">
+                                    <p class="text-primary-gold font-bold text-xl">R$ 74,99</p>
+                                    <button onclick="adicionarAoCarrinho(11)"
+                                        class="w-10 h-10 rounded-lg bg-slate-800 hover:bg-primary-gold text-white hover:text-slate-900 flex items-center justify-center transition-colors">
+                                        <span class="material-symbols-outlined">add_shopping_cart</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div
+                            class="group flex flex-col bg-slate-900 rounded-2xl border border-slate-800 overflow-hidden hover:border-slate-600 transition-colors duration-300 p-4">
+                            <div
+                                class="w-full aspect-[4/5] bg-slate-800/50 rounded-xl flex items-center justify-center relative overflow-hidden mb-4">
+                                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCb7LsaaXp09THdtf5dMNCDhpSdjpaB7EBKb-Js75QXWUT-g4-wVDq4b7oq4XjpcxhqkpZAba_I_DYu2Par2QLMpc4u-uNAzlsM0w-XbRmy3W57crtmyVLz_faedVucZZsswR67eFjnbna3QqknTJ1gUMRtYIJHPc_iJLfKcVTBfyiAfT57QY5GTH2YLIgIiL8ZWtqr-PC3t_wYz3gdFtju839EQ-JeXgMCljI_-SC_SSevRhweIKMPh1rzOqlrMcWu0L-zfPJWt36m"
+                                    class="h-full object-contain group-hover:scale-110 transition-transform duration-700"
+                                    alt="Botanical Bliss Gin">
+                            </div>
+                            <div class="flex flex-col grow">
+                                <p class="text-slate-400 text-xs font-semibold mb-1 uppercase tracking-wider">Destilado
+                                </p>
+                                <h4 class="text-slate-100 font-bold text-base leading-tight mb-3">Botanical Bliss Gin
+                                </h4>
+                                <div class="mt-auto flex items-center justify-between">
+                                    <p class="text-primary-gold font-bold text-xl">R$ 189,50</p>
+                                    <button onclick="adicionarAoCarrinho(7)"
+                                        class="w-10 h-10 rounded-lg bg-slate-800 hover:bg-primary-gold text-white hover:text-slate-900 flex items-center justify-center transition-colors">
+                                        <span class="material-symbols-outlined">add_shopping_cart</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div
+                            class="group flex flex-col bg-slate-900 rounded-2xl border border-slate-800 overflow-hidden hover:border-slate-600 transition-colors duration-300 p-4">
+                            <div
+                                class="w-full aspect-[4/5] bg-slate-800/50 rounded-xl flex items-center justify-center relative overflow-hidden mb-4">
+                                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAEI0pi0mmvU6skD6uZiu71J1zawmMCAv2tkAu4OIRv8B-IxbC57VpeBsoTbEBHpfMnrP-erSEHFiefpAU9x_FGY4Nx6-arj0_HKV_2IdMQbAMpNEqeF47r5bpFHC2YYSijbI4GUyXoqtO_I3OCJOlcAtJmsYCLEvYMl0GgDPgaH3oqhGi8UaesjJQ_2IwrLxu_gJqWmUqJKY2WBZyPKtnnpnr31I4IhlNyFW006oy9KDF-LwXjR48yroU05vKjjJb0PstPjrq0-7Bz"
+                                    class="h-full object-contain group-hover:scale-110 transition-transform duration-700"
+                                    alt="Merlot Reserva">
+                            </div>
+                            <div class="flex flex-col grow">
+                                <p class="text-slate-400 text-xs font-semibold mb-1 uppercase tracking-wider">Vinho</p>
+                                <h4 class="text-slate-100 font-bold text-base leading-tight mb-3">Merlot Reserva
+                                    Familiar</h4>
+                                <div class="mt-auto flex items-center justify-between">
+                                    <p class="text-primary-gold font-bold text-xl">R$ 135,00</p>
+                                    <button onclick="adicionarAoCarrinho(22)"
+                                        class="w-10 h-10 rounded-lg bg-slate-800 hover:bg-primary-gold text-white hover:text-slate-900 flex items-center justify-center transition-colors">
+                                        <span class="material-symbols-outlined">add_shopping_cart</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div
+                            class="group flex flex-col bg-slate-900 rounded-2xl border border-slate-800 overflow-hidden hover:border-slate-600 transition-colors duration-300 p-4">
+                            <div
+                                class="w-full aspect-[4/5] bg-slate-800/50 rounded-xl flex items-center justify-center relative overflow-hidden mb-4">
+                                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuB_uLFTzD2s9CTzpg52R9mN79Vq7vEkq4iDlymrAyI-cec3mw34rzaahDXxp3HHw401jnPNrXg3gTxm83R0tJhIHLWF4A0z-Sq5NMmwTP1sCd4AAJdwuvNsJAwuZre_NRGuZ7mjAkZMmGmlDL18EZfcVXnzj-cKq55VWdgSTU5WpUdUv8EGd8Dx2pBizuxhHA4QyoJ6UxtvofPGzd7FO7OLzeh2VwYIxb2TURG9zrP9P5iP7k9a0M5YYaHXJQdUYY9BuJ64N2r31uYW"
+                                    class="h-full object-contain group-hover:scale-110 transition-transform duration-700"
+                                    alt="Água Botânica">
+                            </div>
+                            <div class="flex flex-col grow">
+                                <p class="text-slate-400 text-xs font-semibold mb-1 uppercase tracking-wider">Sem Álcool
+                                </p>
+                                <h4 class="text-slate-100 font-bold text-base leading-tight mb-3">Água Botânica com Gás
+                                </h4>
+                                <div class="mt-auto flex items-center justify-between">
+                                    <p class="text-primary-gold font-bold text-xl">R$ 8,50</p>
+                                    <button onclick="adicionarAoCarrinho(16)"
+                                        class="w-10 h-10 rounded-lg bg-slate-800 hover:bg-primary-gold text-white hover:text-slate-900 flex items-center justify-center transition-colors">
+                                        <span class="material-symbols-outlined">add_shopping_cart</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div
+                            class="group flex flex-col bg-slate-900 rounded-2xl border border-slate-800 overflow-hidden hover:border-slate-600 transition-colors duration-300 p-4">
+                            <div
+                                class="w-full aspect-[4/5] bg-slate-800/50 rounded-xl flex items-center justify-center relative overflow-hidden mb-4">
+                                <div
+                                    class="absolute top-3 left-3 bg-red-500 text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider z-10">
+                                    Promoção</div>
+                                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCb7LsaaXp09THdtf5dMNCDhpSdjpaB7EBKb-Js75QXWUT-g4-wVDq4b7oq4XjpcxhqkpZAba_I_DYu2Par2QLMpc4u-uNAzlsM0w-XbRmy3W57crtmyVLz_faedVucZZsswR67eFjnbna3QqknTJ1gUMRtYIJHPc_iJLfKcVTBfyiAfT57QY5GTH2YLIgIiL8ZWtqr-PC3t_wYz3gdFtju839EQ-JeXgMCljI_-SC_SSevRhweIKMPh1rzOqlrMcWu0L-zfPJWt36m"
+                                    class="h-full object-contain group-hover:scale-110 transition-transform duration-700"
+                                    alt="Licor de Ervas">
+                            </div>
+                            <div class="flex flex-col grow">
+                                <p class="text-slate-400 text-xs font-semibold mb-1 uppercase tracking-wider">Destilado
+                                </p>
+                                <h4 class="text-slate-100 font-bold text-base leading-tight mb-3">Licor de Ervas Finas
+                                </h4>
+                                <div class="mt-auto flex items-center justify-between">
+                                    <div class="flex flex-col">
+                                        <span class="text-xs text-slate-500 line-through">R$ 140,00</span>
+                                        <p class="text-primary-gold font-bold text-xl">R$ 110,00</p>
+                                    </div>
+                                    <button onclick="adicionarAoCarrinho(25)"
+                                        class="w-10 h-10 rounded-lg bg-slate-800 hover:bg-primary-gold text-white hover:text-slate-900 flex items-center justify-center transition-colors">
+                                        <span class="material-symbols-outlined">add_shopping_cart</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </section>
             </main>
-            
+
             <footer class="border-t border-slate-800 mt-12 py-8 text-center text-slate-500 text-sm">
-                <p>Site desenvolvido por Bruno Carvalho em 2026.</p>
+                <p>© 2026 Bebidas Premium. Site desenvolvido para a disciplina Desenvolvimento Web em 2026.</p>
             </footer>
         </div>
     </div>
 
-    <div id="cart-overlay" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-[60] hidden opacity-0 transition-opacity duration-300" onclick="fecharCarrinhoLateral()"></div>
-    
-    <div id="cart-sidebar" class="fixed top-0 right-0 h-full w-full sm:w-[400px] bg-background-dark shadow-2xl z-[70] transform translate-x-full transition-transform duration-300 flex flex-col border-l border-slate-800">
-        
+    <div id="cart-overlay"
+        class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[60] hidden opacity-0 transition-opacity duration-300"
+        onclick="fecharCarrinhoLateral()"></div>
+
+    <div id="cart-sidebar"
+        class="fixed top-0 right-0 h-full w-full sm:w-[400px] bg-background-dark shadow-[0_0_40px_rgba(0,0,0,0.5)] z-[70] transform translate-x-full transition-transform duration-300 flex flex-col border-l border-slate-800">
         <div class="flex items-center justify-between p-6 border-b border-slate-800">
             <div class="flex items-center gap-2">
                 <span class="material-symbols-outlined text-primary-gold">shopping_bag</span>
@@ -226,20 +405,22 @@
                 <span class="material-symbols-outlined text-2xl">close</span>
             </button>
         </div>
-        
+
         <div id="cart-sidebar-items" class="flex-1 overflow-y-auto p-6 flex flex-col gap-5 scrollbar-thin">
-            </div>
-        
+        </div>
+
         <div class="p-6 border-t border-slate-800 bg-slate-900/50">
             <div class="flex justify-between items-center mb-4">
                 <span class="text-slate-400 font-medium">Subtotal</span>
                 <span id="cart-sidebar-subtotal" class="text-xl font-bold text-white">R$ 0,00</span>
             </div>
-            <a href="pagamento.html" class="w-full flex items-center justify-center gap-2 bg-primary-gold hover:bg-primary-gold/90 text-slate-900 rounded-lg h-12 font-bold transition-colors shadow-md">
+            <a href="pagamento.html"
+                class="w-full flex items-center justify-center gap-2 bg-primary-gold hover:bg-primary-gold/90 text-slate-900 rounded-xl h-14 font-bold transition-colors shadow-md">
                 Ir para o Pagamento <span class="material-symbols-outlined text-lg">arrow_forward</span>
             </a>
         </div>
     </div>
 
 </body>
+
 </html>
