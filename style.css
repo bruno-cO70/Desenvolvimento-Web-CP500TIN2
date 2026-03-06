@@ -1,0 +1,22 @@
+/* style.css */
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+/* Estilização elegante para a barra de rolagem dos filtros */
+.scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+}
+.scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: #cbd5e1; /* Cor suave para o tema claro */
+    border-radius: 10px;
+}
+.dark .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: #334155; /* Cor suave para o tema escuro */
+}

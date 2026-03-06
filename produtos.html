@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Listagem de Produtos - Loja de Bebidas</title>
+    
+    <link rel="stylesheet" href="style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="script.js"></script>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen">
+    <div class="relative flex h-auto min-h-screen w-full flex-col group/design-root">
+        <div class="layout-container flex h-full grow flex-col">
+            
+            <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-slate-800 px-6 lg:px-10 py-3 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md sticky top-0 z-50">
+                <div class="flex items-center gap-6 lg:gap-8 flex-1">
+                    <div class="flex items-center gap-3 text-primary">
+                        <div class="size-6 flex items-center justify-center">
+                            <span class="material-symbols-outlined text-[28px]">local_bar</span>
+                        </div>
+                        <h2 class="text-slate-900 dark:text-slate-100 text-xl font-bold leading-tight tracking-tight">BevShop</h2>
+                    </div>
+                    <label class="hidden sm:flex flex-col h-10 w-full max-w-sm">
+                        <div class="flex w-full flex-1 items-stretch rounded-full h-full bg-slate-100 dark:bg-slate-800">
+                            <div class="text-slate-500 dark:text-slate-400 flex items-center justify-center pl-4 pr-2">
+                                <span class="material-symbols-outlined text-[20px]">search</span>
+                            </div>
+                            <input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-r-full focus:outline-0 focus:ring-0 border-none bg-transparent h-full placeholder:text-slate-500 dark:placeholder:text-slate-400 px-2 text-sm font-medium" placeholder="Buscar bebidas..." value="" />
+                        </div>
+                    </label>
+                </div>
+
+                <div class="flex items-center justify-end gap-6 lg:gap-8">
+                    <nav class="hidden md:flex items-center gap-8">
+                        <a class="text-slate-600 hover:text-primary dark:text-slate-300 transition-colors text-sm font-medium" href="index.html">Início</a>
+                        <a class="text-primary font-bold transition-colors text-sm" href="produtos.html">Produtos</a>
+                        <a class="text-slate-600 hover:text-primary dark:text-slate-300 transition-colors text-sm font-medium" href="pagamento.html">Pagamento</a>
+                    </nav>
+                    <div class="flex items-center gap-3">
+                        <button onclick="abrirCarrinhoLateral()" class="flex size-10 cursor-pointer items-center justify-center rounded-full bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition-colors relative">
+                            <span class="material-symbols-outlined text-[22px]">shopping_cart</span>
+                            <span class="cart-counter absolute top-0 right-0 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-white text-[10px] font-bold hidden">0</span>
+                        </button>
+                        <button class="flex size-10 cursor-pointer items-center justify-center rounded-full bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition-colors">
+                            <span class="material-symbols-outlined text-[22px]">person</span>
+                        </button>
+                    </div>
+                </div>
+            </header>
+            
+            <div class="flex flex-1 mx-auto max-w-[1440px] w-full px-6 py-8 gap-8">
+                
+                <aside class="hidden lg:flex w-80 flex-col shrink-0">
+                    <div class="sticky top-24 flex flex-col gap-6 max-h-[calc(100vh-7rem)] overflow-y-auto pr-4 pb-4 scrollbar-thin">
+                        <div>
+                            <h3 class="text-slate-900 dark:text-slate-100 text-lg font-bold pb-4 border-b border-slate-200 dark:border-slate-800">Filtros</h3>
+                            <div class="flex flex-col mt-4 gap-2">
+                                <details class="group" open="">
+                                    <summary class="flex cursor-pointer items-center justify-between py-2 text-slate-800 dark:text-slate-200 font-semibold select-none">
+                                        Categoria
+                                        <span class="material-symbols-outlined transition-transform group-open:rotate-180">expand_more</span>
+                                    </summary>
+                                    <div class="flex flex-col gap-3 mt-3 pl-1 pb-4">
+                                        <label class="flex items-center gap-3 cursor-pointer">
+                                            <input value="vinho" checked class="filter-category form-checkbox rounded text-primary border-slate-300 dark:border-slate-600 focus:ring-primary dark:bg-slate-800 size-4" type="checkbox" />
+                                            <span class="text-slate-700 dark:text-slate-300 font-medium text-sm">Vinhos</span>
+                                        </label>
+                                        <label class="flex items-center gap-3 cursor-pointer">
+                                            <input value="destilados" checked class="filter-category form-checkbox rounded text-primary border-slate-300 dark:border-slate-600 focus:ring-primary dark:bg-slate-800 size-4" type="checkbox" />
+                                            <span class="text-slate-700 dark:text-slate-300 font-medium text-sm">Destilados</span>
+                                        </label>
+                                        <label class="flex items-center gap-3 cursor-pointer">
+                                            <input value="cerveja" checked class="filter-category form-checkbox rounded text-primary border-slate-300 dark:border-slate-600 focus:ring-primary dark:bg-slate-800 size-4" type="checkbox" />
+                                            <span class="text-slate-700 dark:text-slate-300 font-medium text-sm">Cervejas</span>
+                                        </label>
+                                        <label class="flex items-center gap-3 cursor-pointer">
+                                            <input value="sem-alcool" checked class="filter-category form-checkbox rounded text-primary border-slate-300 dark:border-slate-600 focus:ring-primary dark:bg-slate-800 size-4" type="checkbox" />
+                                            <span class="text-slate-700 dark:text-slate-300 font-medium text-sm">Sem Álcool</span>
+                                        </label>
+                                    </div>
+                                </details>
+                                <details class="group border-t border-slate-100 dark:border-slate-800/50 pt-4" open="">
+                                    <summary class="flex cursor-pointer items-center justify-between py-2 text-slate-800 dark:text-slate-200 font-semibold select-none">
+                                        Faixa de Preço
+                                        <span class="material-symbols-outlined transition-transform group-open:rotate-180">expand_more</span>
+                                    </summary>
+                                    <div class="flex flex-col gap-4 mt-3 pl-1 pb-4">
+                                        <div class="flex items-center gap-2">
+                                            <input id="min-price" class="form-input w-full rounded-md border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm px-3 py-2 focus:border-primary focus:ring-1 focus:ring-primary" placeholder="Mín" type="number" />
+                                            <span class="text-slate-400">-</span>
+                                            <input id="max-price" class="form-input w-full rounded-md border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm px-3 py-2 focus:border-primary focus:ring-1 focus:ring-primary" placeholder="Máx" type="number" />
+                                        </div>
+                                    </div>
+                                </details>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+                
+                <div class="flex-1 flex flex-col min-w-0">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 mb-6">
+                        <div>
+                            <h1 class="text-3xl font-bold text-slate-900 dark:text-white tracking-tight mb-2">Todas as Bebidas</h1>
+                            <p id="product-count" class="text-slate-500 dark:text-slate-400 text-sm">Carregando produtos...</p>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span class="text-sm font-medium text-slate-600 dark:text-slate-300 hidden sm:block">Ordenar por:</span>
+                            <div class="relative">
+                                <select id="sort-select" class="appearance-none form-select block w-52 rounded-lg border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 py-2.5 pl-4 pr-10 text-sm font-medium text-slate-700 dark:text-slate-200 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary cursor-pointer shadow-sm">
+                                    <option value="recomendados">Recomendados</option>
+                                    <option value="menor">Preço: Menor para Maior</option>
+                                    <option value="maior">Preço: Maior para Menor</option>
+                                </select>
+                                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+                                    <span class="material-symbols-outlined text-slate-400 text-xl">expand_more</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    </div>
+                </div>
+            </div>
+            
+            <footer class="border-t border-slate-800 py-8 mt-auto text-center text-slate-500 text-sm">
+                <p>Site desenvolvido por Bruno Carvalho em 2026.</p>
+            </footer>
+        </div>
+    </div>
+
+    <div id="cart-overlay" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-[60] hidden opacity-0 transition-opacity duration-300" onclick="fecharCarrinhoLateral()"></div>
+    
+    <div id="cart-sidebar" class="fixed top-0 right-0 h-full w-full sm:w-[400px] bg-white dark:bg-slate-900 shadow-2xl z-[70] transform translate-x-full transition-transform duration-300 flex flex-col">
+        
+        <div class="flex items-center justify-between p-6 border-b border-slate-200 dark:border-slate-800">
+            <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary">shopping_bag</span>
+                <h2 class="text-xl font-bold text-slate-900 dark:text-white">Seu Carrinho</h2>
+            </div>
+            <button onclick="fecharCarrinhoLateral()" class="text-slate-400 hover:text-slate-700 dark:hover:text-slate-300 transition-colors">
+                <span class="material-symbols-outlined text-2xl">close</span>
+            </button>
+        </div>
+        
+        <div id="cart-sidebar-items" class="flex-1 overflow-y-auto p-6 flex flex-col gap-5 scrollbar-thin">
+            </div>
+        
+        <div class="p-6 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50">
+            <div class="flex justify-between items-center mb-4">
+                <span class="text-slate-600 dark:text-slate-400 font-medium">Subtotal</span>
+                <span id="cart-sidebar-subtotal" class="text-xl font-bold text-slate-900 dark:text-white">R$ 0,00</span>
+            </div>
+            <a href="pagamento.html" class="w-full flex items-center justify-center gap-2 bg-primary hover:bg-primary/90 text-white rounded-lg h-12 font-bold transition-colors shadow-md">
+                Ir para o Pagamento <span class="material-symbols-outlined text-lg">arrow_forward</span>
+            </a>
+        </div>
+    </div>
+
+</body>
+</html>
