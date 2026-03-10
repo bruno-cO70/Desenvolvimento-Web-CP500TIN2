@@ -376,7 +376,20 @@ window.logoutUser = function() {
     window.location.reload(); 
 };
 
-// Fechar dropdown ao clicar fora dele
+// Alternar entre tela de Login e Cadastro
+window.alternarTelasAuth = function(tela) {
+    const loginContainer = document.getElementById('login-container');
+    const registerContainer = document.getElementById('register-container');
+    
+    if (tela === 'register') {
+        loginContainer.classList.add('hidden');
+        registerContainer.classList.remove('hidden');
+    } else {
+        registerContainer.classList.add('hidden');
+        loginContainer.classList.remove('hidden');
+    }
+};
+
 document.addEventListener('click', (e) => {
     const dropdown = document.getElementById('user-dropdown');
     const userBtn = document.getElementById('btn-user-menu');
@@ -387,28 +400,95 @@ document.addEventListener('click', (e) => {
     }
 });
 
-// EVENTO PRINCIPAL: Espera a página carregar para rodar a lógica
 document.addEventListener('DOMContentLoaded', () => {
     
-    // 1. Processar Formulário de Cadastro/Login
-    const authForm = document.getElementById('auth-form');
-    if (authForm) {
-        authForm.addEventListener('submit', function(e) {
-            e.preventDefault(); // Impede a página de dar "refresh"
+    // Função utilitária de validação visual
+    function validarCampo(input) {
+        const labelContainer = input.closest('label');
+        const errorMessage = labelContainer.querySelector('.error-message');
+        
+        if (input.value.trim() === '' || (input.type === 'email' && !input.validity.valid) || (input.type === 'password' && input.value.length < 6)) {
+            input.classList.add('input-error');
+            errorMessage.classList.remove('hidden');
+            errorMessage.classList.add('show');
+            return false;
+        } else {
+            input.classList.remove('input-error');
+            errorMessage.classList.remove('show');
+            errorMessage.classList.add('hidden');
+            return true;
+        }
+    }
+
+    // Aplica validação em tempo real a todos os campos obrigatórios
+    const requiredFields = document.querySelectorAll('.required-field');
+    requiredFields.forEach(field => {
+        field.addEventListener('input', () => validarCampo(field));
+        field.addEventListener('blur', () => validarCampo(field));
+    });
+
+    // --- FORMULÁRIO DE LOGIN ---
+    const loginForm = document.getElementById('login-form');
+    if (loginForm) {
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault(); 
             
-            const nome = document.getElementById('auth-nome').value.trim();
-            const email = document.getElementById('auth-email').value.trim();
+            let formValido = true;
+            loginForm.querySelectorAll('.required-field').forEach(field => { if (!validarCampo(field)) formValido = false; });
+            if (!formValido) return;
+
+            const email = document.getElementById('login-email').value.trim();
+            const senha = document.getElementById('login-senha').value;
             
-            // Salva no Cache do Navegador
-            const user = { nome: nome, email: email };
-            localStorage.setItem('userBevShop', JSON.stringify(user));
+            let dbUsuarios = JSON.parse(localStorage.getItem('db_usuarios_bevshop')) || [];
+            let usuarioExistente = dbUsuarios.find(u => u.email === email);
             
-            // Redireciona com sucesso
-            window.location.href = 'index.html';
+            if (usuarioExistente) {
+                if (usuarioExistente.senha === senha) {
+                    // Login com sucesso!
+                    localStorage.setItem('userBevShop', JSON.stringify(usuarioExistente));
+                    window.location.href = 'index.html';
+                } else {
+                    alert("Senha incorreta!");
+                }
+            } else {
+                alert("Conta não encontrada. Verifique o e-mail ou crie uma nova conta.");
+            }
         });
     }
 
-    // 2. Preencher os dados no menu se já estiver logado
+    // --- FORMULÁRIO DE CADASTRO ---
+    const registerForm = document.getElementById('register-form');
+    if (registerForm) {
+        registerForm.addEventListener('submit', function(e) {
+            e.preventDefault(); 
+            
+            let formValido = true;
+            registerForm.querySelectorAll('.required-field').forEach(field => { if (!validarCampo(field)) formValido = false; });
+            if (!formValido) return;
+
+            const nome = document.getElementById('register-nome').value.trim();
+            const email = document.getElementById('register-email').value.trim();
+            const senha = document.getElementById('register-senha').value;
+            
+            let dbUsuarios = JSON.parse(localStorage.getItem('db_usuarios_bevshop')) || [];
+            let usuarioExistente = dbUsuarios.find(u => u.email === email);
+            
+            if (usuarioExistente) {
+                alert("Este e-mail já está cadastrado! Por favor, faça login.");
+            } else {
+                // Cadastra novo usuário e faz login automático
+                const novoUsuario = { nome: nome, email: email, senha: senha };
+                dbUsuarios.push(novoUsuario);
+                localStorage.setItem('db_usuarios_bevshop', JSON.stringify(dbUsuarios));
+                
+                localStorage.setItem('userBevShop', JSON.stringify(novoUsuario));
+                window.location.href = 'index.html';
+            }
+        });
+    }
+
+    // Preencher menu do usuário na Home/Produtos/Pagamento
     const user = JSON.parse(localStorage.getItem('userBevShop'));
     if (user) {
         const iconDisplay = document.getElementById('user-icon-display');
@@ -419,4 +499,98 @@ document.addEventListener('DOMContentLoaded', () => {
         if (nameDisplay) nameDisplay.textContent = user.nome;
         if (emailDisplay) emailDisplay.textContent = user.email;
     }
+});
+
+// ==========================================
+// 7. FINALIZAR COMPRA E MEUS PEDIDOS
+// ==========================================
+
+window.finalizarCompra = function() {
+    const user = JSON.parse(localStorage.getItem('userBevShop'));
+    
+    if (!user) {
+        window.location.href = 'login.html';
+        return;
+    }
+    if (carrinho.length === 0) return;
+
+    let pedidos = JSON.parse(localStorage.getItem('db_pedidos_bevshop')) || [];
+    const total = carrinho.reduce((acc, item) => acc + (item.preco * item.quantidade), 0) + 12.50; 
+    
+    const novoPedido = {
+        id: 'PED-' + Math.floor(Math.random() * 1000000),
+        data: new Date().toLocaleDateString('pt-BR'),
+        donoDoPedido: user.email, // <--- A MÁGICA AQUI: O pedido agora sabe de quem ele é!
+        itens: [...carrinho],
+        total: total,
+        status: 'Pagamento Aprovado'
+    };
+    
+    pedidos.unshift(novoPedido); 
+    localStorage.setItem('db_pedidos_bevshop', JSON.stringify(pedidos)); // Salva no banco geral de pedidos
+
+    carrinho = [];
+    salvarCarrinho();
+    window.location.href = 'pedidos.html';
+};
+
+function renderizarPedidos() {
+    const containerPedidos = document.getElementById('lista-pedidos');
+    if (!containerPedidos) return;
+
+    const user = JSON.parse(localStorage.getItem('userBevShop'));
+    if (!user) {
+        containerPedidos.innerHTML = '<p class="text-center text-slate-500 py-10">Faça login para ver seus pedidos.</p>';
+        return;
+    }
+
+    // Puxa TODOS os pedidos do banco de dados
+    const todosPedidos = JSON.parse(localStorage.getItem('db_pedidos_bevshop')) || [];
+
+    // <--- O FILTRO: Separa apenas os pedidos cujo e-mail bate com o usuário logado
+    const meusPedidos = todosPedidos.filter(pedido => pedido.donoDoPedido === user.email);
+
+    if (meusPedidos.length === 0) {
+        containerPedidos.innerHTML = `
+            <div class="flex flex-col items-center justify-center py-20 text-slate-400 gap-4">
+                <span class="material-symbols-outlined text-6xl">receipt_long</span>
+                <p class="text-lg">Você ainda não possui pedidos, ${user.nome.split(' ')[0]}.</p>
+                <a href="produtos.html" class="mt-4 px-8 py-3 bg-primary text-white font-bold rounded-xl hover:bg-primary/90 transition-colors shadow-md">Ver Produtos</a>
+            </div>
+        `;
+        return;
+    }
+
+    containerPedidos.innerHTML = meusPedidos.map(pedido => `
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 mb-6 shadow-sm">
+            <div class="flex flex-wrap justify-between items-center border-b border-slate-100 dark:border-slate-800 pb-4 mb-4 gap-4">
+                <div>
+                    <p class="text-sm text-slate-500 dark:text-slate-400">Pedido <span class="font-bold text-slate-900 dark:text-slate-100">${pedido.id}</span></p>
+                    <p class="text-sm text-slate-500 dark:text-slate-400">Realizado em: ${pedido.data}</p>
+                </div>
+                <div class="text-right">
+                    <p class="text-sm text-slate-500 dark:text-slate-400">Total Pago</p>
+                    <p class="font-bold text-primary text-lg">R$ ${pedido.total.toFixed(2).replace('.', ',')}</p>
+                </div>
+                <span class="bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider">
+                    ${pedido.status}
+                </span>
+            </div>
+            <div class="flex flex-col gap-4">
+                ${pedido.itens.map(item => `
+                    <div class="flex items-center gap-4">
+                        <div class="h-16 w-16 rounded-lg bg-slate-100 dark:bg-slate-800 bg-cover bg-center flex-shrink-0" style="background-image: url('${item.img}')"></div>
+                        <div class="flex-1">
+                            <p class="font-bold text-slate-900 dark:text-slate-100 text-sm">${item.nome}</p>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Qtd: ${item.quantidade}</p>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+    `).join('');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    renderizarPedidos();
 });

@@ -20,3 +20,25 @@
 .dark .scrollbar-thin::-webkit-scrollbar-thumb {
     background-color: #334155; /* Cor suave para o tema escuro */
 }
+/* style.css */
+
+/* --- Classes de Erro Personalizadas --- */
+
+/* Estilo para a borda do campo input quando houver erro */
+.form-input.input-error {
+    border-color: #ef4444 !important; /* Vermelho terracota de erro (error-red-500 do Tailwind) */
+    background-color: rgba(239, 68, 68, 0.05) !important; /* Fundo levemente rosado */
+}
+
+/* Estilo para o texto da mensagem de erro */
+.error-message {
+    color: #f87171; /* Um vermelho um pouco mais claro para legibilidade no fundo escuro */
+    opacity: 0;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Classe para mostrar a mensagem de erro com a animação suave */
+.error-message.show {
+    display: flex !important;
+    opacity: 1;
+}
