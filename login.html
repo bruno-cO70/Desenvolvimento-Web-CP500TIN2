@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Login e Cadastro - BevShop</title>
+    
+    <link rel="stylesheet" href="style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700;900&display=swap" rel="stylesheet" />
+    
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="script.js"></script>
+</head>
+<body class="bg-background-dark text-slate-100 font-display dark min-h-screen flex">
+    
+    <div class="hidden lg:flex w-1/2 bg-cover bg-center relative" style="background-image: url('https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=1200&auto=format&fit=crop');">
+        <div class="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/40 to-transparent"></div>
+        <div class="absolute bottom-0 left-0 p-12">
+            <h2 class="text-4xl font-black text-white mb-4">Descubra o Extraordinário.</h2>
+            <p class="text-slate-300 text-lg max-w-md">Junte-se ao clube BevShop e tenha acesso a seleções exclusivas, ofertas antecipadas e muito mais.</p>
+        </div>
+    </div>
+
+    <div class="w-full lg:w-1/2 flex flex-col justify-center items-center p-8 sm:p-12 relative">
+        <a href="index.html" class="absolute top-8 left-8 sm:left-12 flex items-center gap-2 text-slate-400 hover:text-primary-gold transition-colors text-sm font-medium">
+            <span class="material-symbols-outlined text-[18px]">arrow_back</span> Voltar à loja
+        </a>
+
+        <div class="w-full max-w-md mt-12 lg:mt-0">
+            <div class="flex items-center gap-3 text-white mb-8 justify-center lg:justify-start">
+                <div class="size-8 text-primary-gold flex items-center justify-center">
+                    <span class="material-symbols-outlined text-[32px]">local_bar</span>
+                </div>
+                <h1 class="text-3xl font-black tracking-tight">BevShop</h1>
+            </div>
+
+            <h2 class="text-2xl font-bold text-white mb-2">Bem-vindo(a)</h2>
+            <p class="text-slate-400 mb-8">Faça login ou cadastre-se para continuar.</p>
+
+            <form id="auth-form" class="flex flex-col gap-5">
+                <label class="flex flex-col gap-1.5">
+                    <span class="text-sm font-medium text-slate-300">Nome Completo</span>
+                    <input id="auth-nome" type="text" required class="form-input rounded-xl border-slate-700 bg-slate-800/50 text-white focus:ring-primary-gold focus:border-primary-gold h-12 px-4 placeholder:text-slate-500" placeholder="Como quer ser chamado?" />
+                </label>
+
+                <label class="flex flex-col gap-1.5">
+                    <span class="text-sm font-medium text-slate-300">E-mail</span>
+                    <div class="relative">
+                        <input id="auth-email" type="email" required class="form-input rounded-xl border-slate-700 bg-slate-800/50 text-white focus:ring-primary-gold focus:border-primary-gold h-12 w-full pl-11 pr-4 placeholder:text-slate-500" placeholder="seu@email.com" />
+                        <span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-[20px]">mail</span>
+                    </div>
+                </label>
+
+                <label class="flex flex-col gap-1.5">
+                    <span class="text-sm font-medium text-slate-300">Senha</span>
+                    <div class="relative">
+                        <input id="auth-senha" type="password" required minlength="6" class="form-input rounded-xl border-slate-700 bg-slate-800/50 text-white focus:ring-primary-gold focus:border-primary-gold h-12 w-full pl-11 pr-4 placeholder:text-slate-500" placeholder="••••••••" />
+                        <span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-[20px]">lock</span>
+                    </div>
+                </label>
+
+                <button type="submit" class="w-full flex items-center justify-center gap-2 bg-primary-gold hover:bg-primary-gold/90 text-slate-900 rounded-xl h-12 font-bold transition-all shadow-[0_0_15px_rgba(212,175,55,0.15)] hover:shadow-[0_0_25px_rgba(212,175,55,0.3)] mt-2">
+                    Entrar / Cadastrar
+                </button>
+            </form>
+            
+            <p class="text-center text-xs text-slate-500 mt-8">
+                Site desenvolvido por Bruno Carvalho em 2026.
+            </p>
+        </div>
+    </div>
+</body>
+</html>

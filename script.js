@@ -52,14 +52,14 @@ const produtos = [
     { id: 29, nome: "Session IPA Leve", categoria: "cerveja", label: "CERVEJA", preco: 19.90, img: "https://lh3.googleusercontent.com/aida-public/AB6AXuD_zBhMmoVQyhdFTGbsV-odjcE63JL3SX610jrCeDv7lo8kBpC8JwZHqt-g9uQX4-c3JSiIkIwNO6Yh4IlDWXwT7Y1Ry2PTN790typ6armmc8pXXcJAn4urSVaS3FFV7O_V3gZ7qE43ov9A949ddnfJbltbesATNXsx3FHGut-HC4-A7KzUMIxZgRPnSy0BuxfHS2mgbWTD6D7gfvU_Qlc_naQixLkSycO-8evNvP0SLe5MtcEwqIntDNOOdIXi4acXyL-flJB9YUzR" },
 
     // Sem Álcool 
-    { id: 16, nome: "Água Botânica Orgânica com Gás", categoria: "sem-alcool", label: "SEM ÁLCOOL", preco: 8.50, tag: "Mais Vendido", img: "https://lh3.googleusercontent.com/aida-public/AB6AXuB_uLFTzD2s9CTzpg52R9mN79Vq7vEkq4iDlymrAyI-cec3mw34rzaahDXxp3HHw401jnPNrXg3gTxm83R0tJhIHLWF4A0z-Sq5NMmwTP1sCd4AAJdwuvNsJAwuZre_NRGuZ7mjAkZMmGmlDL18EZfcVXnzj-cKq55VWdgSTU5WpUdUv8EGd8Dx2pBizuxhHA4QyoJ6UxtvofPGzd7FO7OLzeh2VwYIxb2TURG9zrP9P5iP7k9a0M5YYaHXJQdUYY9BuJ64N2r31uYW" },
+    { id: 16, nome: "Água Botânica Orgânica", categoria: "sem-alcool", label: "SEM ÁLCOOL", preco: 8.50, tag: "Mais Vendido", img: "https://lh3.googleusercontent.com/aida-public/AB6AXuB_uLFTzD2s9CTzpg52R9mN79Vq7vEkq4iDlymrAyI-cec3mw34rzaahDXxp3HHw401jnPNrXg3gTxm83R0tJhIHLWF4A0z-Sq5NMmwTP1sCd4AAJdwuvNsJAwuZre_NRGuZ7mjAkZMmGmlDL18EZfcVXnzj-cKq55VWdgSTU5WpUdUv8EGd8Dx2pBizuxhHA4QyoJ6UxtvofPGzd7FO7OLzeh2VwYIxb2TURG9zrP9P5iP7k9a0M5YYaHXJQdUYY9BuJ64N2r31uYW" },
     { id: 17, nome: "Suco de Uva Integral", categoria: "sem-alcool", label: "SEM ÁLCOOL", preco: 16.00, img: "https://lh3.googleusercontent.com/aida-public/AB6AXuB_uLFTzD2s9CTzpg52R9mN79Vq7vEkq4iDlymrAyI-cec3mw34rzaahDXxp3HHw401jnPNrXg3gTxm83R0tJhIHLWF4A0z-Sq5NMmwTP1sCd4AAJdwuvNsJAwuZre_NRGuZ7mjAkZMmGmlDL18EZfcVXnzj-cKq55VWdgSTU5WpUdUv8EGd8Dx2pBizuxhHA4QyoJ6UxtvofPGzd7FO7OLzeh2VwYIxb2TURG9zrP9P5iP7k9a0M5YYaHXJQdUYY9BuJ64N2r31uYW" },
-    { id: 18, nome: "Soda Artesanal de Gengibre", categoria: "sem-alcool", label: "SEM ÁLCOOL", preco: 12.00, img: "https://lh3.googleusercontent.com/aida-public/AB6AXuB_uLFTzD2s9CTzpg52R9mN79Vq7vEkq4iDlymrAyI-cec3mw34rzaahDXxp3HHw401jnPNrXg3gTxm83R0tJhIHLWF4A0z-Sq5NMmwTP1sCd4AAJdwuvNsJAwuZre_NRGuZ7mjAkZMmGmlDL18EZfcVXnzj-cKq55VWdgSTU5WpUdUv8EGd8Dx2pBizuxhHA4QyoJ6UxtvofPGzd7FO7OLzeh2VwYIxb2TURG9zrP9P5iP7k9a0M5YYaHXJQdUYY9BuJ64N2r31uYW" },
-    { id: 19, nome: "Kombucha de Frutas Naturais", categoria: "sem-alcool", label: "SEM ÁLCOOL", preco: 18.00, img: "https://lh3.googleusercontent.com/aida-public/AB6AXuB_uLFTzD2s9CTzpg52R9mN79Vq7vEkq4iDlymrAyI-cec3mw34rzaahDXxp3HHw401jnPNrXg3gTxm83R0tJhIHLWF4A0z-Sq5NMmwTP1sCd4AAJdwuvNsJAwuZre_NRGuZ7mjAkZMmGmlDL18EZfcVXnzj-cKq55VWdgSTU5WpUdUv8EGd8Dx2pBizuxhHA4QyoJ6UxtvofPGzd7FO7OLzeh2VwYIxb2TURG9zrP9P5iP7k9a0M5YYaHXJQdUYY9BuJ64N2r31uYW" },
+    { id: 18, nome: "Soda Artesanal Gengibre", categoria: "sem-alcool", label: "SEM ÁLCOOL", preco: 12.00, img: "https://lh3.googleusercontent.com/aida-public/AB6AXuB_uLFTzD2s9CTzpg52R9mN79Vq7vEkq4iDlymrAyI-cec3mw34rzaahDXxp3HHw401jnPNrXg3gTxm83R0tJhIHLWF4A0z-Sq5NMmwTP1sCd4AAJdwuvNsJAwuZre_NRGuZ7mjAkZMmGmlDL18EZfcVXnzj-cKq55VWdgSTU5WpUdUv8EGd8Dx2pBizuxhHA4QyoJ6UxtvofPGzd7FO7OLzeh2VwYIxb2TURG9zrP9P5iP7k9a0M5YYaHXJQdUYY9BuJ64N2r31uYW" },
+    { id: 19, nome: "Kombucha de Frutas", categoria: "sem-alcool", label: "SEM ÁLCOOL", preco: 18.00, img: "https://lh3.googleusercontent.com/aida-public/AB6AXuB_uLFTzD2s9CTzpg52R9mN79Vq7vEkq4iDlymrAyI-cec3mw34rzaahDXxp3HHw401jnPNrXg3gTxm83R0tJhIHLWF4A0z-Sq5NMmwTP1sCd4AAJdwuvNsJAwuZre_NRGuZ7mjAkZMmGmlDL18EZfcVXnzj-cKq55VWdgSTU5WpUdUv8EGd8Dx2pBizuxhHA4QyoJ6UxtvofPGzd7FO7OLzeh2VwYIxb2TURG9zrP9P5iP7k9a0M5YYaHXJQdUYY9BuJ64N2r31uYW" },
     { id: 20, nome: "Cerveja Zero Álcool", categoria: "sem-alcool", label: "SEM ÁLCOOL", preco: 15.00, img: "https://lh3.googleusercontent.com/aida-public/AB6AXuCFtMhn37Sv8TaPXGAhuMzMIp6_4-MkBkKcvkaqfdHy0DkjB03tS_fPKcWa7K6lChBqxPzffsea3ACg-mi-1H-X606L70nrA3Wqs9UjrSkx-SJ7cYrPTRa5YBYYD9hnmCQkD8Xsug8HJTXcT-OuYJpJhv62qzBtsapL3MzrldkRfGNHE5lXp06vTihHx_UF2vILgQQMcTaBOZGmva0J20GShyUxF8dWQCk7nN8uweb7JBi9t2e6Je57asv5VwE6gy4MAtqclNFBMMke" },
     { id: 30, nome: "Água Tônica Artesanal", categoria: "sem-alcool", label: "SEM ÁLCOOL", preco: 9.90, img: "https://lh3.googleusercontent.com/aida-public/AB6AXuB_uLFTzD2s9CTzpg52R9mN79Vq7vEkq4iDlymrAyI-cec3mw34rzaahDXxp3HHw401jnPNrXg3gTxm83R0tJhIHLWF4A0z-Sq5NMmwTP1sCd4AAJdwuvNsJAwuZre_NRGuZ7mjAkZMmGmlDL18EZfcVXnzj-cKq55VWdgSTU5WpUdUv8EGd8Dx2pBizuxhHA4QyoJ6UxtvofPGzd7FO7OLzeh2VwYIxb2TURG9zrP9P5iP7k9a0M5YYaHXJQdUYY9BuJ64N2r31uYW" },
     { id: 31, nome: "Chá Gelado de Pêssego", categoria: "sem-alcool", label: "SEM ÁLCOOL", preco: 11.50, tag: "Promoção", precoAntigo: 15.00, img: "https://lh3.googleusercontent.com/aida-public/AB6AXuB_uLFTzD2s9CTzpg52R9mN79Vq7vEkq4iDlymrAyI-cec3mw34rzaahDXxp3HHw401jnPNrXg3gTxm83R0tJhIHLWF4A0z-Sq5NMmwTP1sCd4AAJdwuvNsJAwuZre_NRGuZ7mjAkZMmGmlDL18EZfcVXnzj-cKq55VWdgSTU5WpUdUv8EGd8Dx2pBizuxhHA4QyoJ6UxtvofPGzd7FO7OLzeh2VwYIxb2TURG9zrP9P5iP7k9a0M5YYaHXJQdUYY9BuJ64N2r31uYW" },
-    { id: 32, nome: "Mocktail de Frutas Vermelhas", categoria: "sem-alcool", label: "SEM ÁLCOOL", preco: 22.00, img: "https://lh3.googleusercontent.com/aida-public/AB6AXuB_uLFTzD2s9CTzpg52R9mN79Vq7vEkq4iDlymrAyI-cec3mw34rzaahDXxp3HHw401jnPNrXg3gTxm83R0tJhIHLWF4A0z-Sq5NMmwTP1sCd4AAJdwuvNsJAwuZre_NRGuZ7mjAkZMmGmlDL18EZfcVXnzj-cKq55VWdgSTU5WpUdUv8EGd8Dx2pBizuxhHA4QyoJ6UxtvofPGzd7FO7OLzeh2VwYIxb2TURG9zrP9P5iP7k9a0M5YYaHXJQdUYY9BuJ64N2r31uYW" }
+    { id: 32, nome: "Mocktail Frutas Vermelhas", categoria: "sem-alcool", label: "SEM ÁLCOOL", preco: 22.00, img: "https://lh3.googleusercontent.com/aida-public/AB6AXuB_uLFTzD2s9CTzpg52R9mN79Vq7vEkq4iDlymrAyI-cec3mw34rzaahDXxp3HHw401jnPNrXg3gTxm83R0tJhIHLWF4A0z-Sq5NMmwTP1sCd4AAJdwuvNsJAwuZre_NRGuZ7mjAkZMmGmlDL18EZfcVXnzj-cKq55VWdgSTU5WpUdUv8EGd8Dx2pBizuxhHA4QyoJ6UxtvofPGzd7FO7OLzeh2VwYIxb2TURG9zrP9P5iP7k9a0M5YYaHXJQdUYY9BuJ64N2r31uYW" }
 ];
 
 // ==========================================
@@ -239,15 +239,50 @@ function renderizarCheckout() {
 }
 
 // ==========================================
-// 5. INICIALIZAÇÃO E LISTAGEM DE PRODUTOS
+// 5. INICIALIZAÇÃO, BUSCA GLOBAL E GRADE
 // ==========================================
 document.addEventListener('DOMContentLoaded', () => {
-    // Inicializa o carrinho em todas as páginas
     atualizarContadorCarrinho();
     renderizarCheckout();
     renderizarCarrinhoLateral();
 
-    // Lógica da grade de produtos (só roda se estiver na produtos.html)
+    // --- LÓGICA DE BUSCA GLOBAL ---
+    const searchForm = document.getElementById('search-form');
+    const searchInput = document.getElementById('search-input');
+    
+    // Verifica se veio de um redirecionamento com pesquisa na URL (?busca=vinho)
+    const urlParams = new URLSearchParams(window.location.search);
+    const termoDaUrl = urlParams.get('busca');
+
+    // Se tiver termo na URL, preenche a barra de pesquisa
+    if (searchInput && termoDaUrl) {
+        searchInput.value = termoDaUrl;
+    }
+
+    // Escuta o "Enter" na barra de pesquisa
+    if (searchForm) {
+        searchForm.addEventListener('submit', (e) => {
+            e.preventDefault(); // Evita recarregar a página imediatamente
+            const termoBuscado = searchInput.value.trim();
+            
+            // Se NÃO estiver na página de produtos, redireciona
+            if (!window.location.pathname.includes('produtos.html')) {
+                window.location.href = `produtos.html?busca=${encodeURIComponent(termoBuscado)}`;
+            } 
+            // Se já estiver na página de produtos, apenas filtra a tela
+            else {
+                // Atualiza a URL para ficar bonito
+                const novaUrl = new URL(window.location);
+                if (termoBuscado) novaUrl.searchParams.set('busca', termoBuscado);
+                else novaUrl.searchParams.delete('busca');
+                window.history.pushState({}, '', novaUrl);
+                
+                if(typeof renderizarProdutos === 'function') renderizarProdutos();
+            }
+        });
+    }
+
+    // --- LÓGICA DA GRADE DE PRODUTOS ---
     const gridContainer = document.getElementById('product-grid');
     if (!gridContainer) return;
 
@@ -261,13 +296,20 @@ document.addEventListener('DOMContentLoaded', () => {
         const categoriasAtivas = Array.from(filterCheckboxes).filter(cb => cb.checked).map(cb => cb.value);
         const minPrice = parseFloat(minPriceInput?.value) || 0;
         const maxPrice = maxPriceInput?.value ? parseFloat(maxPriceInput.value) : Infinity;
+        const termoBusca = searchInput ? searchInput.value.toLowerCase().trim() : '';
 
         let produtosFiltrados = produtos.filter(produto => {
             const matchCategoria = categoriasAtivas.includes(produto.categoria);
             const matchPreco = produto.preco >= minPrice && produto.preco <= maxPrice;
-            return matchCategoria && matchPreco;
+            // Verifica se o texto digitado bate com o nome ou com a categoria
+            const matchBusca = termoBusca === '' || 
+                               produto.nome.toLowerCase().includes(termoBusca) || 
+                               produto.label.toLowerCase().includes(termoBusca);
+            
+            return matchCategoria && matchPreco && matchBusca;
         });
 
+        // Ordenação
         if (sortSelect) {
             if (sortSelect.value === "menor") produtosFiltrados.sort((a, b) => a.preco - b.preco);
             if (sortSelect.value === "maior") produtosFiltrados.sort((a, b) => b.preco - a.preco);
@@ -303,10 +345,78 @@ document.addEventListener('DOMContentLoaded', () => {
         `).join('');
     }
 
+    // Gatilhos de Filtros
     filterCheckboxes.forEach(cb => cb.addEventListener('change', renderizarProdutos));
     if (minPriceInput) minPriceInput.addEventListener('input', renderizarProdutos);
     if (maxPriceInput) maxPriceInput.addEventListener('input', renderizarProdutos);
     if (sortSelect) sortSelect.addEventListener('change', renderizarProdutos);
+    
+    // Além de filtrar ao dar Enter, filtra em tempo real ao digitar na tela de produtos
+    if (searchInput) searchInput.addEventListener('input', renderizarProdutos);
 
     renderizarProdutos();
+});
+// ==========================================
+// 6. LÓGICA DE USUÁRIO (LOGIN / CADASTRO)
+// ==========================================
+
+// Funções globais de abrir e fechar menu
+window.toggleUserMenu = function() {
+    const user = JSON.parse(localStorage.getItem('userBevShop'));
+    if (!user) {
+        window.location.href = 'login.html';
+        return;
+    }
+    const dropdown = document.getElementById('user-dropdown');
+    if (dropdown) dropdown.classList.toggle('hidden');
+};
+
+window.logoutUser = function() {
+    localStorage.removeItem('userBevShop');
+    window.location.reload(); 
+};
+
+// Fechar dropdown ao clicar fora dele
+document.addEventListener('click', (e) => {
+    const dropdown = document.getElementById('user-dropdown');
+    const userBtn = document.getElementById('btn-user-menu');
+    if (dropdown && !dropdown.classList.contains('hidden')) {
+        if (!dropdown.contains(e.target) && !userBtn.contains(e.target)) {
+            dropdown.classList.add('hidden');
+        }
+    }
+});
+
+// EVENTO PRINCIPAL: Espera a página carregar para rodar a lógica
+document.addEventListener('DOMContentLoaded', () => {
+    
+    // 1. Processar Formulário de Cadastro/Login
+    const authForm = document.getElementById('auth-form');
+    if (authForm) {
+        authForm.addEventListener('submit', function(e) {
+            e.preventDefault(); // Impede a página de dar "refresh"
+            
+            const nome = document.getElementById('auth-nome').value.trim();
+            const email = document.getElementById('auth-email').value.trim();
+            
+            // Salva no Cache do Navegador
+            const user = { nome: nome, email: email };
+            localStorage.setItem('userBevShop', JSON.stringify(user));
+            
+            // Redireciona com sucesso
+            window.location.href = 'index.html';
+        });
+    }
+
+    // 2. Preencher os dados no menu se já estiver logado
+    const user = JSON.parse(localStorage.getItem('userBevShop'));
+    if (user) {
+        const iconDisplay = document.getElementById('user-icon-display');
+        const nameDisplay = document.getElementById('user-name-display');
+        const emailDisplay = document.getElementById('user-email-display');
+        
+        if (iconDisplay) iconDisplay.classList.add('text-primary-gold'); 
+        if (nameDisplay) nameDisplay.textContent = user.nome;
+        if (emailDisplay) emailDisplay.textContent = user.email;
+    }
 });
