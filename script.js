@@ -360,9 +360,22 @@ document.addEventListener('DOMContentLoaded', () => {
 // 6. LÓGICA DE USUÁRIO (LOGIN / CADASTRO)
 // ==========================================
 
+function obterClienteSupabase() {
+    return typeof supabaseClient !== 'undefined' ? supabaseClient : null;
+}
+
+async function obterUsuarioAutenticado() {
+    const client = obterClienteSupabase();
+    if (!client) return null;
+
+    const { data, error } = await client.auth.getUser();
+    if (error) return null;
+    return data.user || null;
+}
+
 // Funções globais de abrir e fechar menu
-window.toggleUserMenu = function() {
-    const user = JSON.parse(localStorage.getItem('userBevShop'));
+window.toggleUserMenu = async function() {
+    const user = await obterUsuarioAutenticado();
     if (!user) {
         window.location.href = 'login.html';
         return;
@@ -371,9 +384,12 @@ window.toggleUserMenu = function() {
     if (dropdown) dropdown.classList.toggle('hidden');
 };
 
-window.logoutUser = function() {
-    localStorage.removeItem('userBevShop');
-    window.location.reload(); 
+window.logoutUser = async function() {
+    const client = obterClienteSupabase();
+    if (client) {
+        await client.auth.signOut();
+    }
+    window.location.href = 'login.html';
 };
 
 // Alternar entre tela de Login e Cadastro
@@ -400,7 +416,7 @@ document.addEventListener('click', (e) => {
     }
 });
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     
     // Função utilitária de validação visual
     function validarCampo(input) {
@@ -427,9 +443,9 @@ document.addEventListener('DOMContentLoaded', () => {
         field.addEventListener('blur', () => validarCampo(field));
     });
 
-    // --- FORMULÁRIO DE LOGIN ---
+    // --- FORMULÁRIO DE LOGIN (Supabase) ---
     const loginForm = document.getElementById('login-form');
-    if (loginForm) {
+    if (loginForm && typeof entrar === 'function') {
         loginForm.addEventListener('submit', function(e) {
             e.preventDefault(); 
             
@@ -437,29 +453,13 @@ document.addEventListener('DOMContentLoaded', () => {
             loginForm.querySelectorAll('.required-field').forEach(field => { if (!validarCampo(field)) formValido = false; });
             if (!formValido) return;
 
-            const email = document.getElementById('login-email').value.trim();
-            const senha = document.getElementById('login-senha').value;
-            
-            let dbUsuarios = JSON.parse(localStorage.getItem('db_usuarios_bevshop')) || [];
-            let usuarioExistente = dbUsuarios.find(u => u.email === email);
-            
-            if (usuarioExistente) {
-                if (usuarioExistente.senha === senha) {
-                    // Login com sucesso!
-                    localStorage.setItem('userBevShop', JSON.stringify(usuarioExistente));
-                    window.location.href = 'index.html';
-                } else {
-                    alert("Senha incorreta!");
-                }
-            } else {
-                alert("Conta não encontrada. Verifique o e-mail ou crie uma nova conta.");
-            }
+            entrar();
         });
     }
 
-    // --- FORMULÁRIO DE CADASTRO ---
+    // --- FORMULÁRIO DE CADASTRO (Supabase) ---
     const registerForm = document.getElementById('register-form');
-    if (registerForm) {
+    if (registerForm && typeof cadastrar === 'function') {
         registerForm.addEventListener('submit', function(e) {
             e.preventDefault(); 
             
@@ -467,36 +467,19 @@ document.addEventListener('DOMContentLoaded', () => {
             registerForm.querySelectorAll('.required-field').forEach(field => { if (!validarCampo(field)) formValido = false; });
             if (!formValido) return;
 
-            const nome = document.getElementById('register-nome').value.trim();
-            const email = document.getElementById('register-email').value.trim();
-            const senha = document.getElementById('register-senha').value;
-            
-            let dbUsuarios = JSON.parse(localStorage.getItem('db_usuarios_bevshop')) || [];
-            let usuarioExistente = dbUsuarios.find(u => u.email === email);
-            
-            if (usuarioExistente) {
-                alert("Este e-mail já está cadastrado! Por favor, faça login.");
-            } else {
-                // Cadastra novo usuário e faz login automático
-                const novoUsuario = { nome: nome, email: email, senha: senha };
-                dbUsuarios.push(novoUsuario);
-                localStorage.setItem('db_usuarios_bevshop', JSON.stringify(dbUsuarios));
-                
-                localStorage.setItem('userBevShop', JSON.stringify(novoUsuario));
-                window.location.href = 'index.html';
-            }
+            cadastrar();
         });
     }
 
-    // Preencher menu do usuário na Home/Produtos/Pagamento
-    const user = JSON.parse(localStorage.getItem('userBevShop'));
+    // Preencher menu do usuário na Home/Produtos/Pagamento com sessão do Supabase
+    const user = await obterUsuarioAutenticado();
     if (user) {
         const iconDisplay = document.getElementById('user-icon-display');
         const nameDisplay = document.getElementById('user-name-display');
         const emailDisplay = document.getElementById('user-email-display');
         
         if (iconDisplay) iconDisplay.classList.add('text-primary-gold'); 
-        if (nameDisplay) nameDisplay.textContent = user.nome;
+        if (nameDisplay) nameDisplay.textContent = user.user_metadata?.nome || user.email;
         if (emailDisplay) emailDisplay.textContent = user.email;
     }
 });
@@ -505,8 +488,8 @@ document.addEventListener('DOMContentLoaded', () => {
 // 7. FINALIZAR COMPRA E MEUS PEDIDOS
 // ==========================================
 
-window.finalizarCompra = function() {
-    const user = JSON.parse(localStorage.getItem('userBevShop'));
+window.finalizarCompra = async function() {
+    const user = await obterUsuarioAutenticado();
     
     if (!user) {
         window.location.href = 'login.html';
@@ -534,11 +517,11 @@ window.finalizarCompra = function() {
     window.location.href = 'pedidos.html';
 };
 
-function renderizarPedidos() {
+async function renderizarPedidos() {
     const containerPedidos = document.getElementById('lista-pedidos');
     if (!containerPedidos) return;
 
-    const user = JSON.parse(localStorage.getItem('userBevShop'));
+    const user = await obterUsuarioAutenticado();
     if (!user) {
         containerPedidos.innerHTML = '<p class="text-center text-slate-500 py-10">Faça login para ver seus pedidos.</p>';
         return;
@@ -554,7 +537,7 @@ function renderizarPedidos() {
         containerPedidos.innerHTML = `
             <div class="flex flex-col items-center justify-center py-20 text-slate-400 gap-4">
                 <span class="material-symbols-outlined text-6xl">receipt_long</span>
-                <p class="text-lg">Você ainda não possui pedidos, ${user.nome.split(' ')[0]}.</p>
+                <p class="text-lg">Você ainda não possui pedidos, ${(user.user_metadata?.nome || user.email).split(' ')[0]}.</p>
                 <a href="produtos.html" class="mt-4 px-8 py-3 bg-primary text-white font-bold rounded-xl hover:bg-primary/90 transition-colors shadow-md">Ver Produtos</a>
             </div>
         `;

@@ -6,12 +6,18 @@ const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 // 2. Função para Cadastrar um novo usuário no Banco
 async function cadastrar() {
+    const nomeInput = document.getElementById('register-nome').value;
     const emailInput = document.getElementById('register-email').value;
     const senhaInput = document.getElementById('register-senha').value;
 
     const { data, error } = await supabaseClient.auth.signUp({
         email: emailInput,
         password: senhaInput,
+        options: {
+            data: {
+                nome: nomeInput,
+            },
+        },
     });
 
     if (error) {
