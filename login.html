@@ -11,6 +11,8 @@
     
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="BD.js"></script>
 </head>
 <body class="bg-background-dark text-slate-100 font-display dark min-h-screen flex">
     
@@ -64,11 +66,12 @@
                     </span>
                 </label>
 
-                <button type="submit" class="w-full flex items-center justify-center gap-2 bg-primary-gold hover:bg-primary-gold/90 text-slate-900 rounded-xl h-12 font-bold transition-all shadow-[0_0_15px_rgba(212,175,55,0.15)] hover:shadow-[0_0_25px_rgba(212,175,55,0.3)] mt-2">
+                <button type="button" class="w-full flex items-center justify-center gap-2 bg-primary-gold hover:bg-primary-gold/90 text-slate-900 rounded-xl h-12 font-bold transition-all shadow-[0_0_15px_rgba(212,175,55,0.15)] hover:shadow-[0_0_25px_rgba(212,175,55,0.3)] mt-2" onclick="entrar()">
                     Entrar
                 </button>
             </form>
             
+            <p id="mensagem-login" class="text-center text-sm font-medium mt-4 min-h-[20px]"></p>
             <p class="text-center text-sm text-slate-400 mt-6">
                 Ainda não tem uma conta? <button onclick="alternarTelasAuth('register')" class="text-primary-gold font-bold hover:underline transition-all">Criar conta</button>
             </p>
@@ -119,11 +122,12 @@
                     </span>
                 </label>
 
-                <button type="submit" class="w-full flex items-center justify-center gap-2 bg-primary-gold hover:bg-primary-gold/90 text-slate-900 rounded-xl h-12 font-bold transition-all shadow-[0_0_15px_rgba(212,175,55,0.15)] hover:shadow-[0_0_25px_rgba(212,175,55,0.3)] mt-2">
+                <button type="button" class="w-full flex items-center justify-center gap-2 bg-primary-gold hover:bg-primary-gold/90 text-slate-900 rounded-xl h-12 font-bold transition-all shadow-[0_0_15px_rgba(212,175,55,0.15)] hover:shadow-[0_0_25px_rgba(212,175,55,0.3)] mt-2" onclick="cadastrar()">
                     Criar Conta
                 </button>
             </form>
             
+            <p id="mensagem-register" class="text-center text-sm font-medium mt-4 min-h-[20px]"></p>
             <p class="text-center text-sm text-slate-400 mt-6">
                 Já tem uma conta? <button onclick="alternarTelasAuth('login')" class="text-primary-gold font-bold hover:underline transition-all">Faça login</button>
             </p>
