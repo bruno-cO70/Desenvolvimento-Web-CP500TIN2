@@ -2,8 +2,9 @@
 import { ref, computed, watch, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { produtos as todosOsProdutos } from '@/data/produtos'
-import type { FiltroCategoria, OrdenacaoTipo } from '@/types'
+import type { FiltroCategoria, OrdenacaoTipo, Produto } from '@/types'
 import ProductCard from '@/components/ProductCard.vue'
+import ProductDetailModal from '@/components/ProductDetailModal.vue'
 
 const route = useRoute()
 
@@ -12,6 +13,7 @@ const ordenacao = ref<OrdenacaoTipo>('relevancia')
 const precoMin = ref<number>(0)
 const precoMax = ref<number | null>(null)
 const categoriasAtivas = ref<FiltroCategoria[]>(['vinho', 'destilados', 'cerveja', 'sem-alcool'])
+const produtoSelecionado = ref<Produto | null>(null)
 
 const categorias: { value: FiltroCategoria; label: string }[] = [
   { value: 'vinho', label: 'Vinhos' },
@@ -51,6 +53,14 @@ function toggleCategoria(cat: FiltroCategoria) {
   } else {
     categoriasAtivas.value.push(cat)
   }
+}
+
+function abrirDetalhes(produto: Produto) {
+  produtoSelecionado.value = produto
+}
+
+function fecharDetalhes() {
+  produtoSelecionado.value = null
 }
 </script>
 
@@ -138,10 +148,21 @@ function toggleCategoria(cat: FiltroCategoria) {
         </div>
 
         <div v-else class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
-          <ProductCard v-for="produto in produtosFiltrados" :key="produto.id" :produto="produto" />
+          <ProductCard
+            v-for="produto in produtosFiltrados"
+            :key="produto.id"
+            :produto="produto"
+            @open-details="abrirDetalhes"
+          />
         </div>
       </div>
     </div>
+
+    <ProductDetailModal
+      v-if="produtoSelecionado"
+      :produto="produtoSelecionado"
+      @close="fecharDetalhes"
+    />
   </main>
 
   <footer class="border-t border-slate-800 mt-12 py-8 text-center text-slate-500 text-sm">

@@ -7,6 +7,10 @@ export interface Produto {
   precoAntigo?: number
   tag?: string
   img: string
+  descricao?: string
+  origem?: string
+  alcool?: number
+  volume?: string
 }
 
 export interface ItemCarrinho extends Produto {

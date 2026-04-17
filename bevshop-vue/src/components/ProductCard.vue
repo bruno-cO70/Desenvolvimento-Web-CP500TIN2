@@ -4,13 +4,20 @@ import { useCarrinhoStore } from '@/stores/carrinho'
 import { useFormatters } from '@/composables/useFormatters'
 
 defineProps<{ produto: Produto }>()
+const emit = defineEmits<{
+  (event: 'open-details', produto: Produto): void
+}>()
 
 const carrinho = useCarrinhoStore()
 const { formatarPreco } = useFormatters()
 </script>
 
 <template>
-  <div class="group flex flex-col bg-slate-900 rounded-2xl border border-slate-800 overflow-hidden hover:border-slate-600 transition-colors duration-300 p-4">
+  <div
+    class="group flex flex-col bg-slate-900 rounded-2xl border border-slate-800 overflow-hidden hover:border-slate-600 transition-all duration-300 p-4 h-full cursor-pointer"
+    @click="emit('open-details', produto)"
+  >
+    <!-- Imagem e Tag -->
     <div class="w-full aspect-[4/5] bg-slate-800/50 rounded-xl flex items-center justify-center relative overflow-hidden mb-4">
       <span
         v-if="produto.tag"
@@ -23,9 +30,11 @@ const { formatarPreco } = useFormatters()
         class="h-full object-contain group-hover:scale-110 transition-transform duration-700"
       />
     </div>
+
     <div class="flex flex-col grow">
       <p class="text-slate-400 text-xs font-semibold mb-1 uppercase tracking-wider">{{ produto.label }}</p>
-      <h4 class="text-slate-100 font-bold text-base leading-tight mb-3">{{ produto.nome }}</h4>
+      <h4 class="text-left text-slate-100 font-bold text-base leading-tight mb-4 group-hover:text-[#d4af37] transition-colors">{{ produto.nome }}</h4>
+
       <div class="mt-auto flex items-center justify-between">
         <div class="flex flex-col">
           <span v-if="produto.precoAntigo" class="text-xs text-slate-500 line-through">{{ formatarPreco(produto.precoAntigo) }}</span>
@@ -33,6 +42,7 @@ const { formatarPreco } = useFormatters()
         </div>
         <button
           class="w-10 h-10 rounded-lg bg-slate-800 hover:bg-[#d4af37] text-white hover:text-slate-900 flex items-center justify-center transition-colors"
+          @click.stop
           @click="carrinho.adicionar(produto)"
         >
           <span class="material-symbols-outlined">add_shopping_cart</span>
