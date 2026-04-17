@@ -49,7 +49,7 @@ const produtosFiltrados = computed(() => {
 function toggleCategoria(cat: FiltroCategoria) {
   const idx = categoriasAtivas.value.indexOf(cat)
   if (idx >= 0) {
-    if (categoriasAtivas.value.length > 1) categoriasAtivas.value.splice(idx, 1)
+    categoriasAtivas.value.splice(idx, 1)
   } else {
     categoriasAtivas.value.push(cat)
   }
