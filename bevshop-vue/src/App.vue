@@ -2,6 +2,7 @@
 import { RouterView } from 'vue-router'
 import AppHeader from './components/AppHeader.vue'
 import CartSidebar from './components/CartSidebar.vue'
+import ScrollToTopButton from './components/ScrollToTopButton.vue'
 </script>
 
 <template>
@@ -9,5 +10,6 @@ import CartSidebar from './components/CartSidebar.vue'
     <AppHeader />
     <RouterView />
     <CartSidebar />
+    <ScrollToTopButton />
   </div>
 </template>
