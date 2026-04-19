@@ -45,7 +45,7 @@ onUnmounted(() => {
       <div class="absolute inset-0 bg-slate-950/60 backdrop-blur-sm"></div>
 
       <article
-        class="relative z-10 w-full max-w-4xl rounded-2xl border border-slate-700 bg-slate-900 shadow-2xl overflow-hidden"
+        class="relative z-10 w-full max-w-4xl max-h-[60vh] rounded-2xl border border-slate-700 bg-slate-900 shadow-2xl overflow-hidden flex flex-col"
         @click.stop
       >
         <button
@@ -66,7 +66,7 @@ onUnmounted(() => {
             />
           </div>
 
-          <div class="p-6 md:p-8 flex flex-col gap-4">
+          <div class="scrollbar-custom p-6 md:p-8 flex flex-col gap-4 overflow-y-auto max-h-[60vh]">
             <div class="flex items-center gap-2 flex-wrap">
               <span class="text-[11px] font-semibold tracking-wider uppercase rounded-full bg-slate-800 text-slate-300 px-3 py-1">
                 {{ produto.label }}
@@ -95,9 +95,14 @@ onUnmounted(() => {
                 <p v-if="produto.precoAntigo" class="text-xs text-slate-500 line-through">{{ formatarPreco(produto.precoAntigo) }}</p>
               </div>
 
-              <div v-if="produto.origem" class="rounded-lg bg-slate-800/70 border border-slate-700 p-3">
-                <p class="text-xs text-slate-400 uppercase tracking-wider">Origem</p>
-                <p class="text-slate-100">{{ produto.origem }}</p>
+              <div v-if="produto.pais" class="rounded-lg bg-slate-800/70 border border-slate-700 p-3">
+                <p class="text-xs text-slate-400 uppercase tracking-wider">País de Origem</p>
+                <p class="text-slate-100">{{ produto.pais }}</p>
+              </div>
+
+              <div v-if="produto.regiao" class="rounded-lg bg-slate-800/70 border border-slate-700 p-3">
+                <p class="text-xs text-slate-400 uppercase tracking-wider">Região</p>
+                <p class="text-slate-100">{{ produto.regiao }}</p>
               </div>
 
               <div v-if="produto.volume" class="rounded-lg bg-slate-800/70 border border-slate-700 p-3">
@@ -105,9 +110,39 @@ onUnmounted(() => {
                 <p class="text-slate-100">{{ produto.volume }}</p>
               </div>
 
-              <div v-if="produto.alcool !== undefined" class="rounded-lg bg-slate-800/70 border border-slate-700 p-3 sm:col-span-2">
+              <div v-if="produto.alcool !== undefined" class="rounded-lg bg-slate-800/70 border border-slate-700 p-3">
                 <p class="text-xs text-slate-400 uppercase tracking-wider">Teor alcoólico</p>
                 <p class="text-slate-100">{{ produto.alcool }}%</p>
+              </div>
+
+              <div v-if="produto.temperatura" class="rounded-lg bg-slate-800/70 border border-slate-700 p-3">
+                <p class="text-xs text-slate-400 uppercase tracking-wider">Temperatura Ideal</p>
+                <p class="text-slate-100">{{ produto.temperatura }}</p>
+              </div>
+
+              <div v-if="produto.uvasPrincipais" class="rounded-lg bg-slate-800/70 border border-slate-700 p-3">
+                <p class="text-xs text-slate-400 uppercase tracking-wider">Uvas Principais</p>
+                <p class="text-slate-100 text-sm">{{ produto.uvasPrincipais }}</p>
+              </div>
+
+              <div v-if="produto.notas" class="rounded-lg bg-slate-800/70 border border-slate-700 p-3 sm:col-span-2">
+                <p class="text-xs text-slate-400 uppercase tracking-wider">Notas de Sabor</p>
+                <p class="text-slate-100 text-sm">{{ produto.notas }}</p>
+              </div>
+
+              <div v-if="produto.harmonizacao" class="rounded-lg bg-slate-800/70 border border-slate-700 p-3 sm:col-span-2">
+                <p class="text-xs text-slate-400 uppercase tracking-wider">Harmonização Sugerida</p>
+                <p class="text-slate-100 text-sm">{{ produto.harmonizacao }}</p>
+              </div>
+
+              <div v-if="produto.processo" class="rounded-lg bg-slate-800/70 border border-slate-700 p-3 sm:col-span-2">
+                <p class="text-xs text-slate-400 uppercase tracking-wider">Processo de Produção</p>
+                <p class="text-slate-100 text-sm">{{ produto.processo }}</p>
+              </div>
+
+              <div v-if="produto.envelhecimento" class="rounded-lg bg-slate-800/70 border border-slate-700 p-3 sm:col-span-2">
+                <p class="text-xs text-slate-400 uppercase tracking-wider">Envelhecimento / Armazenamento</p>
+                <p class="text-slate-100 text-sm">{{ produto.envelhecimento }}</p>
               </div>
             </div>
 
@@ -127,3 +162,31 @@ onUnmounted(() => {
     </div>
   </Teleport>
 </template>
+
+<style scoped>
+/* Estilização da barra de rolagem para Webkit (Chrome, Safari, Edge) */
+.scrollbar-custom::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrollbar-custom::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.8);
+  border-radius: 4px;
+}
+
+.scrollbar-custom::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #d4af37, #a68f2f);
+  border-radius: 4px;
+  border: 2px solid rgba(15, 23, 42, 0.8);
+}
+
+.scrollbar-custom::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, #e5c158, #b89f3f);
+}
+
+/* Estilização da barra de rolagem para Firefox */
+.scrollbar-custom {
+  scrollbar-color: #d4af37 rgba(15, 23, 42, 0.8);
+  scrollbar-width: thin;
+}
+</style>

@@ -1,19 +1,31 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import { useCarrinhoStore } from '@/stores/carrinho'
 import { useAuthStore } from '@/stores/auth'
 import { useFormatters } from '@/composables/useFormatters'
+import type { Produto } from '@/types'
 import ProductCard from '@/components/ProductCard.vue'
+import ProductDetailModal from '@/components/ProductDetailModal.vue'
 import { produtos } from '@/data/produtos'
 
 const carrinho = useCarrinhoStore()
 const authStore = useAuthStore()
 const { formatarPreco } = useFormatters()
+const produtoSelecionado = ref<Produto | null>(null)
 
 const maisVendidos = produtos.filter(p =>
   [6, 1, 2, 11, 7, 22, 16, 25].includes(p.id)
 )
 
 const heroProduct = produtos.find(p => p.id === 24)!
+
+function abrirDetalhes(produto: Produto) {
+  produtoSelecionado.value = produto
+}
+
+function fecharDetalhes() {
+  produtoSelecionado.value = null
+}
 </script>
 
 <template>
@@ -110,10 +122,21 @@ const heroProduct = produtos.find(p => p.id === 24)!
         <h2 class="text-slate-100 text-3xl font-bold leading-tight tracking-tight">Mais Vendidos</h2>
       </div>
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        <ProductCard v-for="p in maisVendidos" :key="p.id" :produto="p" />
+        <ProductCard
+          v-for="p in maisVendidos"
+          :key="p.id"
+          :produto="p"
+          @open-details="abrirDetalhes"
+        />
       </div>
     </section>
   </main>
+
+  <ProductDetailModal
+    v-if="produtoSelecionado"
+    :produto="produtoSelecionado"
+    @close="fecharDetalhes"
+  />
 
   <footer class="border-t border-slate-800 mt-12 py-8 text-center text-slate-500 text-sm">
     <p>© 2026 Bebidas Premium. Site desenvolvido para a disciplina Desenvolvimento Web em 2026.</p>

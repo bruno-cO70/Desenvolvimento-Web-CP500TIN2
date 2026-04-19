@@ -9,8 +9,16 @@ export interface Produto {
   img: string
   descricao?: string
   origem?: string
+  regiao?: string
   alcool?: number
   volume?: string
+  pais?: string
+  notas?: string
+  harmonizacao?: string
+  temperatura?: string
+  uvasPrincipais?: string
+  processo?: string
+  envelhecimento?: string
 }
 
 export interface ItemCarrinho extends Produto {
