@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
+// Componente para o botão de "Scroll to Top"
 
 const showButton = ref(false)
 
