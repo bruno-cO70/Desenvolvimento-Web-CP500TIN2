@@ -41,32 +41,31 @@ onUnmounted(() => {
 
 <template>
   <Teleport to="body">
-    <div class="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6" @click="fechar">
+    <div class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 md:p-10 lg:p-12" @click="fechar">
       <div class="absolute inset-0 bg-slate-950/60 backdrop-blur-sm"></div>
 
       <article
-        class="relative z-10 w-full max-w-4xl max-h-[60vh] rounded-2xl border border-slate-700 bg-slate-900 shadow-2xl overflow-hidden flex flex-col"
+        class="relative z-10 w-full max-w-3xl md:max-w-5xl max-h-[95vh] md:max-h-[85vh] rounded-2xl border border-slate-700 bg-slate-900 shadow-2xl overflow-hidden flex flex-col md:flex-row"
         @click.stop
       >
         <button
           type="button"
-          class="absolute right-3 top-3 z-20 inline-flex h-9 w-9 items-center justify-center rounded-full bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-white transition-colors"
+          class="absolute right-3 top-3 sm:right-4 sm:top-4 md:right-8 md:top-8 z-20 inline-flex h-8 w-8 items-center justify-center rounded-full bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-white transition-colors shadow-lg border border-slate-700/50"
           aria-label="Fechar detalhes"
           @click="fechar"
         >
-          <span class="material-symbols-outlined">close</span>
+          <span class="material-symbols-outlined text-[20px]">close</span>
         </button>
 
-        <div class="grid grid-cols-1 md:grid-cols-2">
-          <div class="bg-slate-800/70 p-6 flex items-center justify-center min-h-[320px]">
+        <div class="w-full md:w-1/2 bg-slate-800/70 p-10 sm:p-12 md:p-8 flex items-center justify-center max-h-[40vh] md:max-h-full">
             <img
               :src="produto.img"
               :alt="produto.nome"
-              class="max-h-[380px] w-full object-contain"
+              class="max-h-[350px] w-full object-contain"
             />
           </div>
 
-          <div class="scrollbar-custom p-6 md:p-8 flex flex-col gap-4 overflow-y-auto max-h-[60vh]">
+          <div class="scrollbar-custom w-full md:w-1/2 pt-14 px-5 md:pl-8 md:pr-12 lg:pr-16 py-5 md:py-8 flex flex-col gap-4 md:gap-6 overflow-y-auto max-h-[55vh] md:max-h-full">
             <div class="flex items-center gap-2 flex-wrap">
               <span class="text-[11px] font-semibold tracking-wider uppercase rounded-full bg-slate-800 text-slate-300 px-3 py-1">
                 {{ produto.label }}
@@ -83,81 +82,81 @@ onUnmounted(() => {
             <h2 class="text-2xl font-bold text-slate-100 leading-tight">{{ produto.nome }}</h2>
             <p class="text-slate-300 leading-relaxed">{{ descricaoProduto }}</p>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div class="rounded-lg bg-slate-800/70 border border-slate-700 p-3">
-                <p class="text-xs text-slate-400 uppercase tracking-wider">Categoria</p>
+            <div class="flex flex-wrap items-stretch gap-2 md:gap-3 lg:gap-4">
+              
+              <div class="flex-1 min-w-[140px] rounded-lg bg-slate-800/70 border border-slate-700 p-4 flex flex-col justify-center">
+                <p class="text-xs text-slate-400 uppercase tracking-wider mb-2">Categoria</p>
                 <p class="text-slate-100 font-medium">{{ produto.label }}</p>
               </div>
 
-              <div class="rounded-lg bg-slate-800/70 border border-slate-700 p-3">
-                <p class="text-xs text-slate-400 uppercase tracking-wider">Preço</p>
+              <div class="flex-1 min-w-[140px] rounded-lg bg-slate-800/70 border border-slate-700 p-4 flex flex-col justify-center">
+                <p class="text-xs text-slate-400 uppercase tracking-wider mb-2">Preço</p>
                 <p class="text-[#d4af37] font-bold">{{ formatarPreco(produto.preco) }}</p>
                 <p v-if="produto.precoAntigo" class="text-xs text-slate-500 line-through">{{ formatarPreco(produto.precoAntigo) }}</p>
               </div>
 
-              <div v-if="produto.pais" class="rounded-lg bg-slate-800/70 border border-slate-700 p-3">
-                <p class="text-xs text-slate-400 uppercase tracking-wider">País de Origem</p>
+              <div v-if="produto.pais" class="flex-1 min-w-[140px] rounded-lg bg-slate-800/70 border border-slate-700 p-4 flex flex-col justify-center">
+                <p class="text-xs text-slate-400 uppercase tracking-wider mb-2">País de Origem</p>
                 <p class="text-slate-100">{{ produto.pais }}</p>
               </div>
 
-              <div v-if="produto.regiao" class="rounded-lg bg-slate-800/70 border border-slate-700 p-3">
-                <p class="text-xs text-slate-400 uppercase tracking-wider">Região</p>
+              <div v-if="produto.regiao" class="flex-1 min-w-[140px] rounded-lg bg-slate-800/70 border border-slate-700 p-4 flex flex-col justify-center">
+                <p class="text-xs text-slate-400 uppercase tracking-wider mb-2">Região</p>
                 <p class="text-slate-100">{{ produto.regiao }}</p>
               </div>
 
-              <div v-if="produto.volume" class="rounded-lg bg-slate-800/70 border border-slate-700 p-3">
-                <p class="text-xs text-slate-400 uppercase tracking-wider">Volume</p>
+              <div v-if="produto.volume" class="flex-1 min-w-[140px] rounded-lg bg-slate-800/70 border border-slate-700 p-4 flex flex-col justify-center">
+                <p class="text-xs text-slate-400 uppercase tracking-wider mb-2">Volume</p>
                 <p class="text-slate-100">{{ produto.volume }}</p>
               </div>
 
-              <div v-if="produto.alcool !== undefined" class="rounded-lg bg-slate-800/70 border border-slate-700 p-3">
-                <p class="text-xs text-slate-400 uppercase tracking-wider">Teor alcoólico</p>
+              <div v-if="produto.alcool !== undefined" class="flex-1 min-w-[140px] rounded-lg bg-slate-800/70 border border-slate-700 p-4 flex flex-col justify-center">
+                <p class="text-xs text-slate-400 uppercase tracking-wider mb-2">Teor alcoólico</p>
                 <p class="text-slate-100">{{ produto.alcool }}%</p>
               </div>
 
-              <div v-if="produto.temperatura" class="rounded-lg bg-slate-800/70 border border-slate-700 p-3">
-                <p class="text-xs text-slate-400 uppercase tracking-wider">Temperatura Ideal</p>
+              <div v-if="produto.temperatura" class="flex-1 min-w-[140px] rounded-lg bg-slate-800/70 border border-slate-700 p-4 flex flex-col justify-center">
+                <p class="text-xs text-slate-400 uppercase tracking-wider mb-2">Temperatura Ideal</p>
                 <p class="text-slate-100">{{ produto.temperatura }}</p>
               </div>
 
-              <div v-if="produto.uvasPrincipais" class="rounded-lg bg-slate-800/70 border border-slate-700 p-3">
-                <p class="text-xs text-slate-400 uppercase tracking-wider">Uvas Principais</p>
+              <div v-if="produto.uvasPrincipais" class="flex-1 min-w-[140px] rounded-lg bg-slate-800/70 border border-slate-700 p-4 flex flex-col justify-center">
+                <p class="text-xs text-slate-400 uppercase tracking-wider mb-2">Uvas Principais</p>
                 <p class="text-slate-100 text-sm">{{ produto.uvasPrincipais }}</p>
               </div>
 
-              <div v-if="produto.notas" class="rounded-lg bg-slate-800/70 border border-slate-700 p-3 sm:col-span-2">
-                <p class="text-xs text-slate-400 uppercase tracking-wider">Notas de Sabor</p>
+              <div v-if="produto.notas" class="w-full rounded-lg bg-slate-800/70 border border-slate-700 p-4 flex flex-col justify-center">
+                <p class="text-xs text-slate-400 uppercase tracking-wider mb-2">Notas de Sabor</p>
                 <p class="text-slate-100 text-sm">{{ produto.notas }}</p>
               </div>
 
-              <div v-if="produto.harmonizacao" class="rounded-lg bg-slate-800/70 border border-slate-700 p-3 sm:col-span-2">
-                <p class="text-xs text-slate-400 uppercase tracking-wider">Harmonização Sugerida</p>
+              <div v-if="produto.harmonizacao" class="w-full rounded-lg bg-slate-800/70 border border-slate-700 p-4 flex flex-col justify-center">
+                <p class="text-xs text-slate-400 uppercase tracking-wider mb-2">Harmonização Sugerida</p>
                 <p class="text-slate-100 text-sm">{{ produto.harmonizacao }}</p>
               </div>
 
-              <div v-if="produto.processo" class="rounded-lg bg-slate-800/70 border border-slate-700 p-3 sm:col-span-2">
-                <p class="text-xs text-slate-400 uppercase tracking-wider">Processo de Produção</p>
+              <div v-if="produto.processo" class="w-full rounded-lg bg-slate-800/70 border border-slate-700 p-4 flex flex-col justify-center">
+                <p class="text-xs text-slate-400 uppercase tracking-wider mb-2">Processo de Produção</p>
                 <p class="text-slate-100 text-sm">{{ produto.processo }}</p>
               </div>
 
-              <div v-if="produto.envelhecimento" class="rounded-lg bg-slate-800/70 border border-slate-700 p-3 sm:col-span-2">
-                <p class="text-xs text-slate-400 uppercase tracking-wider">Envelhecimento / Armazenamento</p>
+              <div v-if="produto.envelhecimento" class="w-full rounded-lg bg-slate-800/70 border border-slate-700 p-4 flex flex-col justify-center">
+                <p class="text-xs text-slate-400 uppercase tracking-wider mb-2">Envelhecimento / Armazenamento</p>
                 <p class="text-slate-100 text-sm">{{ produto.envelhecimento }}</p>
               </div>
             </div>
 
-            <div class="pt-2 border-t border-slate-700/70 flex items-center justify-end">
+            <div class="pt-4 border-t border-slate-700/70 flex items-center justify-end mt-2">
               <button
                 type="button"
-                class="w-10 h-10 rounded-lg bg-slate-800 hover:bg-[#d4af37] text-white hover:text-slate-900 flex items-center justify-center transition-colors"
+                class="w-12 h-12 rounded-xl bg-slate-800 hover:bg-[#d4af37] text-white hover:text-slate-900 flex items-center justify-center transition-all shadow-md"
                 aria-label="Adicionar ao carrinho"
                 @click="carrinho.adicionar(produto)"
               >
-                <span class="material-symbols-outlined">add_shopping_cart</span>
+                <span class="material-symbols-outlined text-2xl">add_shopping_cart</span>
               </button>
             </div>
           </div>
-        </div>
       </article>
     </div>
   </Teleport>

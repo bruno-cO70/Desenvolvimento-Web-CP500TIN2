@@ -7,8 +7,6 @@ import type { Produto } from '@/types'
 import ProductCard from '@/components/ProductCard.vue'
 import ProductDetailModal from '@/components/ProductDetailModal.vue'
 import { produtos } from '@/data/produtos'
-import ProductDetailModal from '@/components/ProductDetailModal.vue'
-import type { Produto } from '@/types'
 
 const carrinho = useCarrinhoStore()
 const authStore = useAuthStore()
@@ -124,7 +122,9 @@ function fecharDetalhes() {
         <h2 class="text-slate-100 text-3xl font-bold leading-tight tracking-tight">Mais Vendidos</h2>
       </div>
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        <ProductCard v-for="p in maisVendidos" :key="p.id" :produto="p" />
+        <div v-for="p in maisVendidos" :key="p.id" @click="abrirDetalhes(p)" class="cursor-pointer">
+          <ProductCard :produto="p" />
+        </div>
       </div>
     </section>
   </main>
