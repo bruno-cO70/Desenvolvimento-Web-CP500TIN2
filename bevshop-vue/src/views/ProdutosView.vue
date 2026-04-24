@@ -5,6 +5,7 @@ import { produtos as todosOsProdutos } from '@/data/produtos'
 import type { FiltroCategoria, OrdenacaoTipo, Produto } from '@/types'
 import ProductCard from '@/components/ProductCard.vue'
 import ProductDetailModal from '@/components/ProductDetailModal.vue'
+import { useSmartSearch } from '@/composables/useSmartSearch'
 
 const route = useRoute()
 
@@ -14,6 +15,9 @@ const precoMin = ref<number>(0)
 const precoMax = ref<number | null>(null)
 const categoriasAtivas = ref<FiltroCategoria[]>(['vinho', 'destilados', 'cerveja', 'sem-alcool'])
 const produtoSelecionado = ref<Produto | null>(null)
+const mostrarSugestoesBusca = ref(false)
+
+const { rankProducts, getSuggestions } = useSmartSearch()
 
 const categorias: { value: FiltroCategoria; label: string }[] = [
   { value: 'vinho', label: 'Vinhos' },
@@ -28,23 +32,37 @@ onMounted(() => {
 })
 
 watch(() => route.query.busca, (val) => {
-  if (val) termoBusca.value = val as string
+  termoBusca.value = val ? (val as string) : ''
 })
 
 const produtosFiltrados = computed(() => {
-  let lista = todosOsProdutos.filter(p => {
+  const listaBase = todosOsProdutos.filter(p => {
     const matchCategoria = categoriasAtivas.value.includes(p.categoria)
     const matchPreco = p.preco >= precoMin.value && (precoMax.value === null || p.preco <= precoMax.value)
-    const termo = termoBusca.value.toLowerCase().trim()
-    const matchBusca = !termo || p.nome.toLowerCase().includes(termo) || p.label.toLowerCase().includes(termo)
-    return matchCategoria && matchPreco && matchBusca
+    return matchCategoria && matchPreco
   })
+
+  const termo = termoBusca.value.trim()
+  let lista = termo ? rankProducts(listaBase, termo).map(item => item.produto) : listaBase
 
   if (ordenacao.value === 'menor') lista = [...lista].sort((a, b) => a.preco - b.preco)
   if (ordenacao.value === 'maior') lista = [...lista].sort((a, b) => b.preco - a.preco)
 
   return lista
 })
+
+const sugestoesBusca = computed(() => getSuggestions(todosOsProdutos, termoBusca.value, 5))
+
+function aplicarSugestaoBusca(nomeProduto: string) {
+  termoBusca.value = nomeProduto
+  mostrarSugestoesBusca.value = false
+}
+
+function lidarBlurBusca() {
+  window.setTimeout(() => {
+    mostrarSugestoesBusca.value = false
+  }, 100)
+}
 
 function toggleCategoria(cat: FiltroCategoria) {
   const idx = categoriasAtivas.value.indexOf(cat)
@@ -127,19 +145,37 @@ function fecharDetalhes() {
 
       <!-- Grid de Produtos -->
       <div class="flex-1">
-        <div class="flex items-center justify-between mb-6">
-          <p class="text-slate-400 text-sm">
-            Mostrando <span class="font-bold text-slate-100">{{ produtosFiltrados.length }}</span> de {{ todosOsProdutos.length }} produtos
-          </p>
+        <div class="flex items-center justify-start gap-4 mb-6">
           <div class="relative hidden sm:block">
             <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-[20px]">search</span>
             <input
               v-model="termoBusca"
               type="search"
-              placeholder="Buscar..."
-              class="bg-slate-800 border border-slate-700 rounded-xl pl-10 pr-4 py-2 text-slate-100 text-sm focus:outline-none focus:border-[#d4af37] w-48"
+              placeholder="Buscar com IA local..."
+              @focus="mostrarSugestoesBusca = true"
+              @blur="lidarBlurBusca"
+              class="bg-slate-800 border border-slate-700 rounded-xl pl-10 pr-4 py-2 text-slate-100 text-sm focus:outline-none focus:border-[#d4af37] w-72"
             />
+
+            <div
+              v-if="mostrarSugestoesBusca && sugestoesBusca.length > 0"
+              class="absolute top-full mt-2 left-0 right-0 bg-slate-900 border border-slate-700 rounded-xl shadow-[0_16px_40px_rgba(0,0,0,0.35)] overflow-hidden z-30"
+            >
+              <button
+                v-for="sugestao in sugestoesBusca"
+                :key="sugestao.id"
+                type="button"
+                class="w-full px-3 py-2 text-left hover:bg-slate-800 transition-colors border-b border-slate-800 last:border-b-0"
+                @mousedown.prevent="aplicarSugestaoBusca(sugestao.nome)"
+              >
+                <p class="text-xs text-slate-100 truncate">{{ sugestao.nome }}</p>
+                <p class="text-[10px] text-slate-400 uppercase tracking-wider mt-1">{{ sugestao.label }}</p>
+              </button>
+            </div>
           </div>
+          <p class="text-slate-400 text-sm">
+            Mostrando <span class="font-bold text-slate-100">{{ produtosFiltrados.length }}</span> de {{ todosOsProdutos.length }} produtos
+          </p>
         </div>
 
         <div v-if="produtosFiltrados.length === 0" class="flex flex-col items-center justify-center py-20 text-slate-400 gap-4">

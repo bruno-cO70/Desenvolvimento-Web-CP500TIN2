@@ -1,16 +1,25 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { computed, ref } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import { useCarrinhoStore } from '@/stores/carrinho'
 import { useAuthStore } from '@/stores/auth'
+import { produtos } from '@/data/produtos'
+import { useSmartSearch } from '@/composables/useSmartSearch'
 
 const router = useRouter()
+const route = useRoute()
 const carrinhoStore = useCarrinhoStore()
 const authStore = useAuthStore()
 
 const menuAberto = ref(false)
 const menuMobileAberto = ref(false)
 const termoBusca = ref('')
+const mostrarSugestoes = ref(false)
+
+const { getSuggestions } = useSmartSearch()
+
+const sugestoesBusca = computed(() => getSuggestions(produtos, termoBusca.value, 8))
+const mostrarBuscaCabecalho = computed(() => route.name !== 'produtos')
 
 function toggleMenu() {
   // Se não estiver logado, manda pro login
@@ -22,10 +31,23 @@ function toggleMenu() {
   menuAberto.value = !menuAberto.value
 }
 
-function buscar() {
-  if (!termoBusca.value.trim()) return
-  router.push({ name: 'produtos', query: { busca: termoBusca.value.trim() } })
+function buscar(termo?: string) {
+  const texto = (termo ?? termoBusca.value).trim()
+  if (!texto) return
+  termoBusca.value = texto
+  router.push({ name: 'produtos', query: { busca: texto } })
   menuMobileAberto.value = false
+  mostrarSugestoes.value = false
+}
+
+function selecionarSugestao(nome: string) {
+  buscar(nome)
+}
+
+function lidarBlurBusca() {
+  window.setTimeout(() => {
+    mostrarSugestoes.value = false
+  }, 100)
 }
 
 async function sair() {
@@ -43,7 +65,11 @@ async function sair() {
         <h2 class="text-slate-100 text-xl font-bold leading-tight tracking-tight">BevShop</h2>
       </RouterLink>
 
-      <form class="hidden sm:flex flex-col h-12 flex-1 max-w-[240px] lg:max-w-[420px] transition-all duration-300" @submit.prevent="buscar">
+      <form
+        v-if="mostrarBuscaCabecalho"
+        class="hidden sm:flex flex-col flex-1 max-w-[240px] lg:max-w-[420px] transition-all duration-300 relative"
+        @submit.prevent="buscar()"
+      >
         <div class="flex w-full flex-1 items-stretch rounded-full h-full bg-slate-800/80 border border-slate-700/50 hover:border-[#d4af37]/50 transition-colors">
           <div class="text-slate-400 flex items-center justify-center pl-4 pr-2">
             <span class="material-symbols-outlined text-[20px]">search</span>
@@ -52,9 +78,27 @@ async function sair() {
             v-model="termoBusca"
             type="search"
             autocomplete="off"
+            @focus="mostrarSugestoes = true"
+            @blur="lidarBlurBusca"
             class="flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-r-full text-slate-100 focus:outline-none border-none bg-transparent h-full placeholder:text-slate-400 px-2 text-sm font-normal"
             placeholder="Buscar bebidas premium..."
           />
+        </div>
+
+        <div
+          v-if="mostrarSugestoes && sugestoesBusca.length > 0"
+          class="absolute top-full mt-2 left-0 right-0 bg-slate-900 border border-slate-700 rounded-2xl shadow-[0_16px_40px_rgba(0,0,0,0.35)] overflow-hidden max-h-80 overflow-y-auto z-[70]"
+        >
+          <button
+            v-for="sugestao in sugestoesBusca"
+            :key="sugestao.id"
+            type="button"
+            class="w-full px-4 py-3 text-left hover:bg-slate-800 transition-colors border-b border-slate-800 last:border-b-0"
+            @mousedown.prevent="selecionarSugestao(sugestao.nome)"
+          >
+            <p class="text-sm text-slate-100 font-medium truncate">{{ sugestao.nome }}</p>
+            <p class="text-[11px] text-slate-400 uppercase tracking-wider mt-1">{{ sugestao.label }}</p>
+          </button>
         </div>
       </form>
     </div>
@@ -109,7 +153,7 @@ async function sair() {
                 </div>
                 <div class="overflow-hidden">
                   <h3 class="font-bold text-white text-lg leading-tight truncate">
-                    {{ authStore.usuario.user_metadata?.nome || authStore.usuario.raw_user_meta_data?.nome || 'Usuário VIP' }}
+                    {{ authStore.usuario.user_metadata?.nome || 'Usuário VIP' }}
                   </h3>
                   <span class="text-[10px] uppercase tracking-widest text-[#d4af37] font-bold">Conta Ativa</span>
                 </div>
