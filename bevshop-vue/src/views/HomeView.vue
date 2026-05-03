@@ -1,23 +1,34 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useCarrinhoStore } from '@/stores/carrinho'
 import { useAuthStore } from '@/stores/auth'
 import { useFormatters } from '@/composables/useFormatters'
 import type { Produto } from '@/types'
 import ProductCard from '@/components/ProductCard.vue'
 import ProductDetailModal from '@/components/ProductDetailModal.vue'
-import { produtos } from '@/data/produtos'
+import { getCatalogoProdutos, sincronizarProdutosLojaComSupabase } from '@/data/catalogo'
 
 const carrinho = useCarrinhoStore()
 const authStore = useAuthStore()
 const { formatarPreco } = useFormatters()
 const produtoSelecionado = ref<Produto | null>(null)
+const produtos = ref<Produto[]>(getCatalogoProdutos())
 
-const maisVendidos = produtos.filter(p =>
-  [6, 1, 2, 11, 7, 22, 16, 25].includes(p.id)
+const maisVendidos = computed(() =>
+  produtos.value.filter(p => [6, 1, 2, 11, 7, 22, 16, 25].includes(p.id))
 )
 
-const heroProduct = produtos.find(p => p.id === 24)!
+const heroProduct = computed(() => produtos.value.find(p => p.id === 24) ?? produtos.value[0])
+
+onMounted(() => {
+  sincronizarProdutosLojaComSupabase()
+    .then(() => {
+      produtos.value = getCatalogoProdutos()
+    })
+    .catch(() => {
+      // Mantem os produtos locais se a sincronizacao remota falhar.
+    })
+})
 
 function abrirDetalhes(produto: Produto) {
   produtoSelecionado.value = produto
@@ -69,7 +80,7 @@ function fecharDetalhes() {
         <div class="flex flex-col sm:flex-row gap-4 mt-4">
           <button
             class="flex-1 flex items-center justify-center gap-2 h-14 px-8 bg-[#d4af37] hover:bg-[#d4af37]/90 transition-all text-slate-900 text-base font-bold rounded-xl shadow-[0_0_20px_rgba(212,175,55,0.2)] hover:shadow-[0_0_30px_rgba(212,175,55,0.4)] hover:-translate-y-1"
-            @click="carrinho.adicionar(heroProduct)"
+            @click="heroProduct && carrinho.adicionar(heroProduct)"
           >
             <span class="material-symbols-outlined">shopping_cart_checkout</span>
             Comprar Agora
@@ -84,7 +95,7 @@ function fecharDetalhes() {
       </div>
       <div
         class="w-full lg:w-1/2 h-[400px] lg:h-[600px] bg-cover bg-center"
-        :style="{ backgroundImage: `url('${heroProduct.img}')` }"
+        :style="{ backgroundImage: heroProduct ? `url('${heroProduct.img}')` : 'none' }"
       />
     </section>
 

@@ -1,8 +1,16 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import type { Produto } from '@/types'
+import {
+  getProdutosLojaLocal,
+  salvarProdutosLojaLocal,
+  getProximoIdCatalogo,
+  sincronizarProdutosLojaComSupabase,
+  salvarProdutoLojaNoSupabase,
+  removerProdutoLojaDoSupabase,
+} from '@/data/catalogo'
 
 const router = useRouter()
 const authStore = useAuthStore()
@@ -13,7 +21,7 @@ if (authStore.usuario?.user_metadata?.tipo_conta !== 'loja') {
 }
 
 // Produtos armazenados localmente
-const produtos = ref<Produto[]>(JSON.parse(localStorage.getItem('meusProdutos') || '[]'))
+const produtos = ref<Produto[]>(getProdutosLojaLocal())
 
 // Formulário
 const editandoId = ref<number | null>(null)
@@ -62,6 +70,15 @@ const formulario = ref<{
 const mensagem = ref('')
 const mensagemTipo = ref<'sucesso' | 'erro' | null>(null)
 
+onMounted(async () => {
+  try {
+    produtos.value = await sincronizarProdutosLojaComSupabase()
+  } catch {
+    // Fallback local para manter a tela funcional mesmo sem conexão.
+    produtos.value = getProdutosLojaLocal()
+  }
+})
+
 // Produtos do usuário
 const meusProdutos = computed(() => {
   const usuarioId = authStore.usuario?.id
@@ -70,8 +87,7 @@ const meusProdutos = computed(() => {
 
 // IDs únicos para novos produtos
 const proximoId = computed(() => {
-  const ids = produtos.value.map(p => p.id)
-  return ids.length > 0 ? Math.max(...ids) + 1 : 1
+  return getProximoIdCatalogo(produtos.value)
 })
 
 // Limpar formulário
@@ -107,7 +123,7 @@ const editarProduto = (produto: Produto) => {
 }
 
 // Salvar produto
-const salvarProduto = () => {
+const salvarProduto = async () => {
   // Validar campos obrigatórios
   if (!formulario.value.nome.trim() || !formulario.value.label.trim() || formulario.value.preco <= 0 || !formulario.value.img.trim()) {
     mensagem.value = 'Preencha todos os campos obrigatórios!'
@@ -119,29 +135,38 @@ const salvarProduto = () => {
     return
   }
 
+  const produtoSalvar: Produto = {
+    ...formulario.value,
+    id: editandoId.value ?? proximoId.value,
+    ownerId: authStore.usuario?.id,
+    lojaNome: authStore.usuario?.user_metadata?.nome,
+  } as Produto
+
+  try {
+    await salvarProdutoLojaNoSupabase(produtoSalvar)
+  } catch {
+    mensagem.value = 'Nao foi possivel salvar no Supabase. Verifique a tabela produtos_loja e as permissoes.'
+    mensagemTipo.value = 'erro'
+    setTimeout(() => {
+      mensagem.value = ''
+      mensagemTipo.value = null
+    }, 4000)
+    return
+  }
+
   if (editandoId.value) {
     // Atualizar
     const index = produtos.value.findIndex(p => p.id === editandoId.value)
     if (index !== -1) {
-      produtos.value[index] = {
-        ...formulario.value,
-        id: editandoId.value,
-        ownerId: authStore.usuario?.id,
-        lojaNome: authStore.usuario?.user_metadata?.nome,
-      }
+      produtos.value[index] = produtoSalvar
     }
   } else {
     // Criar novo
-    produtos.value.push({
-      ...formulario.value,
-      id: proximoId.value,
-      ownerId: authStore.usuario?.id,
-      lojaNome: authStore.usuario?.user_metadata?.nome,
-    } as Produto)
+    produtos.value.push(produtoSalvar)
   }
 
   // Salvar no localStorage
-  localStorage.setItem('meusProdutos', JSON.stringify(produtos.value))
+  salvarProdutosLojaLocal(produtos.value)
 
   mensagem.value = editandoId.value ? 'Produto atualizado com sucesso!' : 'Produto adicionado com sucesso!'
   mensagemTipo.value = 'sucesso'
@@ -154,10 +179,22 @@ const salvarProduto = () => {
 }
 
 // Deletar produto
-const deletarProduto = (id: number) => {
+const deletarProduto = async (id: number) => {
   if (confirm('Tem certeza que deseja deletar este produto?')) {
+    try {
+      await removerProdutoLojaDoSupabase(id)
+    } catch {
+      mensagem.value = 'Nao foi possivel deletar no Supabase. Verifique a tabela produtos_loja e as permissoes.'
+      mensagemTipo.value = 'erro'
+      setTimeout(() => {
+        mensagem.value = ''
+        mensagemTipo.value = null
+      }, 4000)
+      return
+    }
+
     produtos.value = produtos.value.filter(p => p.id !== id)
-    localStorage.setItem('meusProdutos', JSON.stringify(produtos.value))
+    salvarProdutosLojaLocal(produtos.value)
     mensagem.value = 'Produto deletado com sucesso!'
     mensagemTipo.value = 'sucesso'
     setTimeout(() => {

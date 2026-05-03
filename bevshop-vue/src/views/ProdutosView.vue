@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { ref, computed, watch, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
-import { produtos as todosOsProdutos } from '@/data/produtos'
 import type { FiltroCategoria, OrdenacaoTipo, Produto } from '@/types'
 import ProductCard from '@/components/ProductCard.vue'
 import ProductDetailModal from '@/components/ProductDetailModal.vue'
 import { useSmartSearch } from '@/composables/useSmartSearch'
+import { getCatalogoProdutos, sincronizarProdutosLojaComSupabase } from '@/data/catalogo'
 
 const route = useRoute()
 
@@ -16,6 +16,7 @@ const precoMax = ref<number | null>(null)
 const categoriasAtivas = ref<FiltroCategoria[]>(['vinho', 'destilados', 'cerveja', 'sem-alcool'])
 const produtoSelecionado = ref<Produto | null>(null)
 const mostrarSugestoesBusca = ref(false)
+const todosOsProdutos = ref<Produto[]>([])
 
 const { rankProducts, getSuggestions } = useSmartSearch()
 
@@ -27,8 +28,18 @@ const categorias: { value: FiltroCategoria; label: string }[] = [
 ]
 
 onMounted(() => {
+  todosOsProdutos.value = getCatalogoProdutos()
+
   const busca = route.query.busca as string
   if (busca) termoBusca.value = busca
+
+  sincronizarProdutosLojaComSupabase()
+    .then(() => {
+      todosOsProdutos.value = getCatalogoProdutos()
+    })
+    .catch(() => {
+      // Mantem o catalogo local quando a sincronizacao remota falhar.
+    })
 })
 
 watch(() => route.query.busca, (val) => {
@@ -36,7 +47,7 @@ watch(() => route.query.busca, (val) => {
 })
 
 const produtosFiltrados = computed(() => {
-  const listaBase = todosOsProdutos.filter(p => {
+  const listaBase = todosOsProdutos.value.filter(p => {
     const matchCategoria = categoriasAtivas.value.includes(p.categoria)
     const matchPreco = p.preco >= precoMin.value && (precoMax.value === null || p.preco <= precoMax.value)
     return matchCategoria && matchPreco
@@ -51,7 +62,7 @@ const produtosFiltrados = computed(() => {
   return lista
 })
 
-const sugestoesBusca = computed(() => getSuggestions(todosOsProdutos, termoBusca.value, 5))
+const sugestoesBusca = computed(() => getSuggestions(todosOsProdutos.value, termoBusca.value, 5))
 
 function aplicarSugestaoBusca(nomeProduto: string) {
   termoBusca.value = nomeProduto

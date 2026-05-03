@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useCarrinhoStore } from '@/stores/carrinho'
 import { useAuthStore } from '@/stores/auth'
-import { produtos } from '@/data/produtos'
 import { useSmartSearch } from '@/composables/useSmartSearch'
+import { getCatalogoProdutos, sincronizarProdutosLojaComSupabase } from '@/data/catalogo'
 
 const router = useRouter()
 const route = useRoute()
@@ -15,12 +15,23 @@ const menuAberto = ref(false)
 const menuMobileAberto = ref(false)
 const termoBusca = ref('')
 const mostrarSugestoes = ref(false)
+const produtosBusca = ref(getCatalogoProdutos())
 
 const { getSuggestions } = useSmartSearch()
 
-const sugestoesBusca = computed(() => getSuggestions(produtos, termoBusca.value, 8))
+const sugestoesBusca = computed(() => getSuggestions(produtosBusca.value, termoBusca.value, 8))
 const mostrarBuscaCabecalho = computed(() => route.name !== 'produtos')
 const contaLoja = computed(() => authStore.usuario?.user_metadata?.tipo_conta === 'loja')
+
+onMounted(() => {
+  sincronizarProdutosLojaComSupabase()
+    .then(() => {
+      produtosBusca.value = getCatalogoProdutos()
+    })
+    .catch(() => {
+      // Em falha de rede, mantem dados locais para a busca.
+    })
+})
 
 function toggleMenu() {
   // Se não estiver logado, manda pro login
