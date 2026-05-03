@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
+import type { TipoConta } from '@/types'
 
 const router = useRouter()
 const authStore = useAuthStore()
@@ -13,6 +14,7 @@ const mode = ref('login')
 const nome = ref('')
 const email = ref('')
 const senha = ref('')
+const tipoConta = ref<TipoConta>('cliente')
 const erroMsg = ref('')
 const msgSucesso = ref('')
 const loading = ref(false)
@@ -37,9 +39,10 @@ const handleSubmit = async () => {
       router.push('/')
     } 
     else if (mode.value === 'register') {
-      erro = await authStore.cadastrar(nome.value, email.value, senha.value)
+      erro = await authStore.cadastrar(nome.value, email.value, senha.value, tipoConta.value)
       if (erro) { erroMsg.value = erro; return; }
-      router.push('/')
+      // Redireciona para loja se for loja, ou para home se for cliente
+      router.push(tipoConta.value === 'loja' ? '/loja' : '/')
     }
     else if (mode.value === 'forgot') {
       // Chama a função de recuperar senha que você adicionou na store
@@ -95,6 +98,18 @@ const handleSubmit = async () => {
             <span class="text-sm font-medium text-slate-300">Nome Completo</span>
             <input v-model="nome" type="text" required class="rounded-xl border-slate-700 bg-slate-800/50 text-white focus:ring-[#d4af37] focus:border-[#d4af37] h-12 px-4 placeholder:text-slate-500" placeholder="Como quer ser chamado?" />
           </label>
+
+          <div v-if="mode === 'register'" class="flex flex-col gap-1.5">
+            <span class="text-sm font-medium text-slate-300">Tipo de Conta</span>
+            <div class="flex gap-3">
+              <button type="button" @click="tipoConta = 'cliente'" :class="['flex-1 h-12 rounded-xl font-semibold transition-all', tipoConta === 'cliente' ? 'bg-[#d4af37] text-slate-900' : 'bg-slate-800/50 text-slate-300 border border-slate-700 hover:bg-slate-700/50']">
+                Cliente
+              </button>
+              <button type="button" @click="tipoConta = 'loja'" :class="['flex-1 h-12 rounded-xl font-semibold transition-all', tipoConta === 'loja' ? 'bg-[#d4af37] text-slate-900' : 'bg-slate-800/50 text-slate-300 border border-slate-700 hover:bg-slate-700/50']">
+                Loja
+              </button>
+            </div>
+          </div>
 
           <label class="flex flex-col gap-1.5">
             <span class="text-sm font-medium text-slate-300">E-mail</span>

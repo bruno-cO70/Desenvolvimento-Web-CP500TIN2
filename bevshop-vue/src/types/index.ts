@@ -1,3 +1,5 @@
+export type TipoConta = 'cliente' | 'loja'
+
 export interface Produto {
   id: number
   nome: string
@@ -19,6 +21,8 @@ export interface Produto {
   uvasPrincipais?: string
   processo?: string
   envelhecimento?: string
+  ownerId?: string
+  lojaNome?: string
 }
 
 export interface ItemCarrinho extends Produto {

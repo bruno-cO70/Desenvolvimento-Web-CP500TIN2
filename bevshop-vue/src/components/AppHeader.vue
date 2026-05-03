@@ -20,6 +20,7 @@ const { getSuggestions } = useSmartSearch()
 
 const sugestoesBusca = computed(() => getSuggestions(produtos, termoBusca.value, 8))
 const mostrarBuscaCabecalho = computed(() => route.name !== 'produtos')
+const contaLoja = computed(() => authStore.usuario?.user_metadata?.tipo_conta === 'loja')
 
 function toggleMenu() {
   // Se não estiver logado, manda pro login
@@ -107,6 +108,7 @@ async function sair() {
       <nav class="hidden md:flex items-center gap-6 lg:gap-8">
         <RouterLink to="/" class="text-slate-300 hover:text-[#d4af37] transition-colors text-sm font-medium" active-class="text-[#d4af37] font-bold">Início</RouterLink>
         <RouterLink to="/produtos" class="text-slate-300 hover:text-[#d4af37] transition-colors text-sm font-medium" active-class="text-[#d4af37] font-bold">Produtos</RouterLink>
+        <RouterLink v-if="contaLoja" to="/loja" class="text-slate-300 hover:text-[#d4af37] transition-colors text-sm font-medium" active-class="text-[#d4af37] font-bold">Meus Produtos</RouterLink>
         <RouterLink to="/pagamento" class="text-slate-300 hover:text-[#d4af37] transition-colors text-sm font-medium" active-class="text-[#d4af37] font-bold">Pagamento</RouterLink>
       </nav>
 
@@ -165,6 +167,15 @@ async function sair() {
             </div>
             
             <div class="p-3 bg-slate-800">
+              <RouterLink
+                v-if="contaLoja"
+                to="/loja"
+                class="flex items-center gap-3 px-4 py-3 text-sm font-medium text-slate-300 hover:bg-slate-700 hover:text-white rounded-xl transition-colors"
+                @click="menuAberto = false"
+              >
+                <span class="material-symbols-outlined text-[20px] text-[#d4af37]">store</span> Meus Produtos
+              </RouterLink>
+              
               <RouterLink
                 to="/pedidos"
                 class="flex items-center gap-3 px-4 py-3 text-sm font-medium text-slate-300 hover:bg-slate-700 hover:text-white rounded-xl transition-colors"
@@ -240,6 +251,17 @@ async function sair() {
           >
             <span class="material-symbols-outlined text-[20px]">shopping_bag</span>
             Produtos
+          </RouterLink>
+
+          <RouterLink
+            v-if="contaLoja"
+            to="/loja"
+            class="flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-slate-800 hover:text-[#d4af37] rounded-lg transition-colors font-medium"
+            active-class="bg-slate-800 text-[#d4af37] font-bold"
+            @click="menuMobileAberto = false"
+          >
+            <span class="material-symbols-outlined text-[20px]">store</span>
+            Meus Produtos
           </RouterLink>
 
           <RouterLink

@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import type { User } from '@supabase/supabase-js'
 import { supabase } from '@/lib/supabase'
+import type { TipoConta } from '@/types'
 
 export const useAuthStore = defineStore('auth', () => {
   const usuario = ref<User | null>(null)
@@ -23,11 +24,22 @@ export const useAuthStore = defineStore('auth', () => {
     return null
   }
 
-  async function cadastrar(nome: string, email: string, senha: string): Promise<string | null> {
+  async function cadastrar(
+    nome: string,
+    email: string,
+    senha: string,
+    tipoConta: TipoConta = 'cliente'
+  ): Promise<string | null> {
     const { error } = await supabase.auth.signUp({
       email,
       password: senha,
-      options: { data: { nome } },
+      options: {
+        data: {
+          nome,
+          tipo_conta: tipoConta,
+          nome_loja: nome,
+        },
+      },
     })
     if (error) return error.message
     return null
