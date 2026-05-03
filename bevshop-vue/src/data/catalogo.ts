@@ -89,13 +89,21 @@ function mapearProdutoParaRemoto(produto: Produto) {
 }
 
 export async function buscarProdutosLojaRemotos(): Promise<Produto[]> {
-  const { data, error } = await supabase
-    .from(TABELA_PRODUTOS_LOJA)
-    .select('*')
-    .order('id', { ascending: true })
+  try {
+    const { data, error } = await supabase
+      .from(TABELA_PRODUTOS_LOJA)
+      .select('*')
+      .order('id', { ascending: true })
 
-  if (error) throw error
-  return (data ?? []).map((row) => mapearProdutoRemoto(row as Record<string, unknown>))
+    if (error) {
+      console.error('Erro SELECT:', error)
+      throw new Error(`Falha ao buscar produtos: ${error.message}`)
+    }
+    return (data ?? []).map((row) => mapearProdutoRemoto(row as Record<string, unknown>))
+  } catch (err: any) {
+    console.error('Erro completo:', err)
+    throw err
+  }
 }
 
 export async function sincronizarProdutosLojaComSupabase(): Promise<Produto[]> {
@@ -106,20 +114,51 @@ export async function sincronizarProdutosLojaComSupabase(): Promise<Produto[]> {
 
 export async function salvarProdutoLojaNoSupabase(produto: Produto): Promise<void> {
   const payload = mapearProdutoParaRemoto(produto)
-  const { error } = await supabase
-    .from(TABELA_PRODUTOS_LOJA)
-    .upsert(payload, { onConflict: 'id' })
-
-  if (error) throw error
+  
+  try {
+    if (produto.id && produto.id > 1000) {
+      // Se ID for alto (maior que 1000), é um produto novo, usar INSERT
+      const { error } = await supabase
+        .from(TABELA_PRODUTOS_LOJA)
+        .insert([payload])
+      
+      if (error) {
+        console.error('Erro INSERT:', error)
+        throw new Error(`Falha ao criar produto: ${error.message}`)
+      }
+    } else {
+      // Atualizar produto existente
+      const { error } = await supabase
+        .from(TABELA_PRODUTOS_LOJA)
+        .update(payload)
+        .eq('id', produto.id)
+      
+      if (error) {
+        console.error('Erro UPDATE:', error)
+        throw new Error(`Falha ao atualizar produto: ${error.message}`)
+      }
+    }
+  } catch (err: any) {
+    console.error('Erro completo:', err)
+    throw err
+  }
 }
 
 export async function removerProdutoLojaDoSupabase(id: number): Promise<void> {
-  const { error } = await supabase
-    .from(TABELA_PRODUTOS_LOJA)
-    .delete()
-    .eq('id', id)
+  try {
+    const { error } = await supabase
+      .from(TABELA_PRODUTOS_LOJA)
+      .delete()
+      .eq('id', id)
 
-  if (error) throw error
+    if (error) {
+      console.error('Erro DELETE:', error)
+      throw new Error(`Falha ao deletar produto: ${error.message}`)
+    }
+  } catch (err: any) {
+    console.error('Erro completo:', err)
+    throw err
+  }
 }
 
 export function getProximoIdCatalogo(produtosLoja: Produto[] = []): number {

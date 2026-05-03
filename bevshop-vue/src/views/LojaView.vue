@@ -144,8 +144,10 @@ const salvarProduto = async () => {
 
   try {
     await salvarProdutoLojaNoSupabase(produtoSalvar)
-  } catch {
-    mensagem.value = 'Nao foi possivel salvar no Supabase. Verifique a tabela produtos_loja e as permissoes.'
+  } catch (err: any) {
+    const mensagemErro = err?.message || 'Erro desconhecido'
+    console.error('Erro ao salvar produto:', err)
+    mensagem.value = `Erro: ${mensagemErro}`
     mensagemTipo.value = 'erro'
     setTimeout(() => {
       mensagem.value = ''
@@ -183,8 +185,10 @@ const deletarProduto = async (id: number) => {
   if (confirm('Tem certeza que deseja deletar este produto?')) {
     try {
       await removerProdutoLojaDoSupabase(id)
-    } catch {
-      mensagem.value = 'Nao foi possivel deletar no Supabase. Verifique a tabela produtos_loja e as permissoes.'
+    } catch (err: any) {
+      const mensagemErro = err?.message || 'Erro desconhecido'
+      console.error('Erro ao deletar produto:', err)
+      mensagem.value = `Erro: ${mensagemErro}`
       mensagemTipo.value = 'erro'
       setTimeout(() => {
         mensagem.value = ''
