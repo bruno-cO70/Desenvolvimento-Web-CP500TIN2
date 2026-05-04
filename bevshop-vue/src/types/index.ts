@@ -36,6 +36,8 @@ export interface Pedido {
   itens: ItemCarrinho[]
   total: number
   status: string
+  endereco?: string;
+  metodoPagamento?: string;
 }
 
 export type FiltroCategoria = 'vinho' | 'destilados' | 'cerveja' | 'sem-alcool'
