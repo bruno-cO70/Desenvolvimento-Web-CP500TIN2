@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import type { Produto } from '@/types'
@@ -15,10 +15,15 @@ import {
 const router = useRouter()
 const authStore = useAuthStore()
 
-// Redireciona se não for loja
-if (authStore.usuario?.user_metadata?.tipo_conta !== 'loja') {
-  router.push('/')
-}
+watch(
+  () => [authStore.carregando, authStore.usuario?.user_metadata?.tipo_conta] as const,
+  ([carregando, tipoConta]) => {
+    if (!carregando && tipoConta !== 'loja') {
+      router.push('/')
+    }
+  },
+  { immediate: true },
+)
 
 // Produtos armazenados localmente
 const produtos = ref<Produto[]>(getProdutosLojaLocal())
@@ -124,6 +129,12 @@ const editarProduto = (produto: Produto) => {
 
 // Salvar produto
 const salvarProduto = async () => {
+  if (!authStore.usuario) {
+    mensagem.value = 'Faça login novamente para salvar o produto.'
+    mensagemTipo.value = 'erro'
+    return
+  }
+
   // Validar campos obrigatórios
   if (!formulario.value.nome.trim() || !formulario.value.label.trim() || formulario.value.preco <= 0 || !formulario.value.img.trim()) {
     mensagem.value = 'Preencha todos os campos obrigatórios!'
@@ -138,8 +149,8 @@ const salvarProduto = async () => {
   const produtoSalvar: Produto = {
     ...formulario.value,
     id: editandoId.value ?? proximoId.value,
-    ownerId: authStore.usuario?.id,
-    lojaNome: authStore.usuario?.user_metadata?.nome,
+    ownerId: authStore.usuario.id,
+    lojaNome: authStore.usuario.user_metadata?.nome,
   } as Produto
 
   try {

@@ -5,8 +5,15 @@ import App from './App.vue'
 import router from './router'
 import { useAuthStore } from './stores/auth'
 
-const app = createApp(App)
-const pinia = createPinia()
-app.use(pinia).use(router)
-app.mount('#app')
-useAuthStore().inicializar()
+async function bootstrap() {
+	const app = createApp(App)
+	const pinia = createPinia()
+	const authStore = useAuthStore(pinia)
+
+	app.use(pinia).use(router)
+
+	await authStore.inicializar()
+	app.mount('#app')
+}
+
+bootstrap()

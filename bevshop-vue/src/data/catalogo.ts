@@ -116,27 +116,13 @@ export async function salvarProdutoLojaNoSupabase(produto: Produto): Promise<voi
   const payload = mapearProdutoParaRemoto(produto)
   
   try {
-    if (produto.id && produto.id > 1000) {
-      // Se ID for alto (maior que 1000), é um produto novo, usar INSERT
-      const { error } = await supabase
-        .from(TABELA_PRODUTOS_LOJA)
-        .insert([payload])
-      
-      if (error) {
-        console.error('Erro INSERT:', error)
-        throw new Error(`Falha ao criar produto: ${error.message}`)
-      }
-    } else {
-      // Atualizar produto existente
-      const { error } = await supabase
-        .from(TABELA_PRODUTOS_LOJA)
-        .update(payload)
-        .eq('id', produto.id)
-      
-      if (error) {
-        console.error('Erro UPDATE:', error)
-        throw new Error(`Falha ao atualizar produto: ${error.message}`)
-      }
+    const { error } = await supabase
+      .from(TABELA_PRODUTOS_LOJA)
+      .upsert([payload], { onConflict: 'id' })
+
+    if (error) {
+      console.error('Erro UPSERT:', error)
+      throw new Error(`Falha ao salvar produto: ${error.message}`)
     }
   } catch (err: any) {
     console.error('Erro completo:', err)
