@@ -57,11 +57,12 @@ onUnmounted(() => {
           <span class="material-symbols-outlined text-[20px]">close</span>
         </button>
 
+        <!-- AJUSTE AQUI: aspect-square, object-cover e cantos arredondados na imagem -->
         <div class="w-full md:w-1/2 bg-slate-800/70 p-10 sm:p-12 md:p-8 flex items-center justify-center max-h-[40vh] md:max-h-full">
             <img
               :src="produto.img"
               :alt="produto.nome"
-              class="max-h-[350px] w-full object-contain"
+              class="w-full max-w-[300px] md:max-w-[400px] aspect-square object-cover rounded-xl shadow-lg"
             />
           </div>
 
@@ -163,7 +164,6 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
-/* Estilização da barra de rolagem para Webkit (Chrome, Safari, Edge) */
 .scrollbar-custom::-webkit-scrollbar {
   width: 8px;
 }
@@ -183,7 +183,6 @@ onUnmounted(() => {
   background: linear-gradient(to bottom, #e5c158, #b89f3f);
 }
 
-/* Estilização da barra de rolagem para Firefox */
 .scrollbar-custom {
   scrollbar-color: #d4af37 rgba(15, 23, 42, 0.8);
   scrollbar-width: thin;

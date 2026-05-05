@@ -82,7 +82,8 @@ async function sair() {
         class="hidden sm:flex flex-col flex-1 max-w-[240px] lg:max-w-[420px] transition-all duration-300 relative"
         @submit.prevent="buscar()"
       >
-        <div class="flex w-full flex-1 items-stretch rounded-full h-full bg-slate-800/80 border border-slate-700/50 hover:border-[#d4af37]/50 transition-colors">
+
+        <div class="flex w-full flex-1 items-stretch rounded-full h-12 bg-slate-800/80 border border-slate-700/50 hover:border-[#d4af37]/50 transition-colors">
           <div class="text-slate-400 flex items-center justify-center pl-4 pr-2">
             <span class="material-symbols-outlined text-[20px]">search</span>
           </div>

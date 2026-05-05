@@ -1,11 +1,14 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { ref, computed } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 import { useFormatters } from '@/composables/useFormatters'
 import type { Pedido } from '@/types'
 
 const auth = useAuthStore()
 const { formatarPreco } = useFormatters()
+
+// Controle de quais pedidos estão com os detalhes abertos
+const pedidosExpandidos = ref<string[]>([])
 
 const meusPedidos = computed<Pedido[]>(() => {
   if (!auth.usuario) return []
@@ -17,6 +20,15 @@ const nomeUsuario = computed(() => {
   if (!auth.usuario) return ''
   return (auth.usuario.user_metadata?.nome || auth.usuario.email || '').split(' ')[0]
 })
+
+function toggleDetalhes(id: string) {
+  const index = pedidosExpandidos.value.indexOf(id)
+  if (index > -1) {
+    pedidosExpandidos.value.splice(index, 1) // Fecha se já estiver aberto
+  } else {
+    pedidosExpandidos.value.push(id) // Abre se estiver fechado
+  }
+}
 </script>
 
 <template>
@@ -54,10 +66,12 @@ const nomeUsuario = computed(() => {
             {{ pedido.status }}
           </span>
         </div>
+        
+        <!-- Itens do Pedido -->
         <div class="flex flex-col gap-4">
           <div v-for="item in pedido.itens" :key="item.id" class="flex items-center gap-4">
             <div
-              class="h-16 w-16 rounded-lg bg-slate-800 bg-cover bg-center flex-shrink-0"
+              class="h-16 w-16 rounded-lg bg-slate-800 bg-cover bg-center flex-shrink-0 border border-slate-700"
               :style="{ backgroundImage: `url('${item.img}')` }"
             />
             <div class="flex-1">
@@ -66,6 +80,44 @@ const nomeUsuario = computed(() => {
             </div>
           </div>
         </div>
+
+        <!-- Seção de Mais Detalhes -->
+        <div class="mt-6 pt-4 border-t border-slate-800">
+          <button 
+            @click="toggleDetalhes(pedido.id)" 
+            class="text-[#137fec] text-sm font-bold flex items-center gap-1 hover:underline transition-all"
+          >
+            {{ pedidosExpandidos.includes(pedido.id) ? 'Ocultar detalhes' : 'Mais detalhes' }}
+            <span class="material-symbols-outlined text-[18px]">
+              {{ pedidosExpandidos.includes(pedido.id) ? 'expand_less' : 'expand_more' }}
+            </span>
+          </button>
+
+          <!-- Caixa de Informações Expandida -->
+          <div 
+            v-if="pedidosExpandidos.includes(pedido.id)" 
+            class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4 bg-slate-800/40 p-4 rounded-xl border border-slate-700/50"
+          >
+            <div>
+              <p class="text-[11px] text-slate-400 uppercase tracking-widest font-semibold mb-1 flex items-center gap-1">
+                <span class="material-symbols-outlined text-[14px]">local_shipping</span> Local de Entrega
+              </p>
+              <p class="text-sm text-slate-100 font-medium">
+                {{ pedido.endereco || 'Endereço não informado' }}
+              </p>
+            </div>
+            
+            <div>
+              <p class="text-[11px] text-slate-400 uppercase tracking-widest font-semibold mb-1 flex items-center gap-1">
+                <span class="material-symbols-outlined text-[14px]">payments</span> Método de Pagamento
+              </p>
+              <p class="text-sm text-slate-100 font-medium">
+                {{ pedido.metodoPagamento || 'Não informado' }}
+              </p>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </main>

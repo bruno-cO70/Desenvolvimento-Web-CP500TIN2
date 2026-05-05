@@ -2,10 +2,12 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useCarrinhoStore } from '@/stores/carrinho'
+import { useAuthStore } from '@/stores/auth' // <-- Faltava importar
 import { useFormatters } from '@/composables/useFormatters'
 
 const router = useRouter()
 const carrinhoStore = useCarrinhoStore()
+const authStore = useAuthStore() // <-- Faltava declarar
 const { formatarPreco } = useFormatters()
 
 const form = ref({
@@ -27,11 +29,30 @@ const processarPagamento = () => {
     return
   }
 
+  if (!authStore.usuario) {
+    alert('Você precisa estar logado para finalizar a compra.')
+    router.push('/login')
+    return
+  }
+
+  const novoPedido = {
+    id: `PED-${Math.random().toString(36).slice(2, 11).toUpperCase()}`,
+    donoDoPedido: authStore.usuario!.email, 
+    data: new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }),
+    total: carrinhoStore.subtotal,
+    status: 'Aprovado',
+    itens: [...carrinhoStore.itens],
+    endereco: form.value.endereco,
+    metodoPagamento: form.value.metodo === 'cartao' ? 'Cartão de Crédito' : 'PIX'
+  }
+
+  const pedidosAntigos = JSON.parse(localStorage.getItem('db_pedidos_bevshop') ?? '[]')
+  pedidosAntigos.unshift(novoPedido)
+  localStorage.setItem('db_pedidos_bevshop', JSON.stringify(pedidosAntigos))
+
   alert('Pagamento aprovado! O seu pedido foi realizado com sucesso.')
-  
-  // CORREÇÃO: Usando 'limpar' que é o nome na sua store
   carrinhoStore.limpar() 
-  router.push('/') 
+  router.push('/pedidos') 
 }
 </script>
 
@@ -54,7 +75,7 @@ const processarPagamento = () => {
             <input v-model="form.endereco" required class="bg-slate-900 border-slate-700 rounded-lg p-3 w-full" placeholder="Endereço Completo" />
           </div>
         </section>
-
+        
         <section class="bg-slate-800/50 p-6 rounded-xl border border-slate-700">
           <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
             <span class="material-symbols-outlined text-[#d4af37]">payments</span> Pagamento

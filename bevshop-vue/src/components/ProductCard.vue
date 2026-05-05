@@ -24,10 +24,12 @@ const { formatarPreco } = useFormatters()
         class="absolute top-3 left-3 text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider z-10 text-white"
         :class="produto.tag === 'Promoção' ? 'bg-red-500' : 'bg-[#d4af37] text-slate-900'"
       >{{ produto.tag }}</span>
+      
+      <!-- Ajuste fino: adicionado w-full h-full e object-cover -->
       <img
         :src="produto.img"
         :alt="produto.nome"
-        class="h-full object-contain group-hover:scale-110 transition-transform duration-700"
+        class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
       />
     </div>
 
