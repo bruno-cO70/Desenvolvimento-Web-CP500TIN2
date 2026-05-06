@@ -1,5 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-  <path d="M8 22h8"/>
-  <path d="M12 15v7"/>
-  <path d="M2 3l10 12L22 3z"/>
+  <!-- Triângulo principal da taça -->
+  <polygon points="3 4 21 4 12 13 3 4" />
+  
+  <!-- Linha do líquido -->
+  <line x1="6" y1="7" x2="18" y2="7" />
+  
+  <!-- Haste da taça -->
+  <line x1="12" y1="13" x2="12" y2="20" />
+  
+  <!-- Base da taça -->
+  <line x1="7" y1="20" x2="17" y2="20" />
 </svg>
