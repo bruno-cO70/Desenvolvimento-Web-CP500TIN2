@@ -1,32 +1,49 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue' // <-- onMounted adicionado
 import { useAuthStore } from '@/stores/auth'
 import { useFormatters } from '@/composables/useFormatters'
 import type { Pedido } from '@/types'
+import { supabase } from '@/lib/supabase'
 
 const auth = useAuthStore()
 const { formatarPreco } = useFormatters()
 
-// Controle de quais pedidos estão com os detalhes abertos
 const pedidosExpandidos = ref<string[]>([])
-
-const meusPedidos = computed<Pedido[]>(() => {
-  if (!auth.usuario) return []
-  const todos: Pedido[] = JSON.parse(localStorage.getItem('db_pedidos_bevshop') ?? '[]')
-  return todos.filter(p => p.donoDoPedido === auth.usuario!.email)
-})
+const meusPedidos = ref<Pedido[]>([]) // <-- Deixou de ser computed e virou ref
 
 const nomeUsuario = computed(() => {
   if (!auth.usuario) return ''
   return (auth.usuario.user_metadata?.nome || auth.usuario.email || '').split(' ')[0]
 })
 
+// Função para buscar no banco de dados
+async function buscarPedidosDoBanco() {
+  if (!auth.usuario) return
+
+  const { data, error } = await supabase
+    .from('pedidos')
+    .select('*')
+    .eq('donoDoPedido', auth.usuario.email) // Filtra só os pedidos deste usuário
+
+  if (error) {
+    console.error('Erro ao buscar pedidos:', error)
+  } else if (data) {
+    // Como os mais novos entram por último no BD, invertemos a lista para o mais recente ficar no topo
+    meusPedidos.value = (data as Pedido[]).reverse() 
+  }
+}
+
+// Dispara a busca assim que a tela abre
+onMounted(() => {
+  buscarPedidosDoBanco()
+})
+
 function toggleDetalhes(id: string) {
   const index = pedidosExpandidos.value.indexOf(id)
   if (index > -1) {
-    pedidosExpandidos.value.splice(index, 1) // Fecha se já estiver aberto
+    pedidosExpandidos.value.splice(index, 1) 
   } else {
-    pedidosExpandidos.value.push(id) // Abre se estiver fechado
+    pedidosExpandidos.value.push(id) 
   }
 }
 </script>

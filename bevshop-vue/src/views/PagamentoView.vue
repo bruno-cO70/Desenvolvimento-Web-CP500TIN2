@@ -2,28 +2,20 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useCarrinhoStore } from '@/stores/carrinho'
-import { useAuthStore } from '@/stores/auth' // <-- Faltava importar
+import { useAuthStore } from '@/stores/auth'
 import { useFormatters } from '@/composables/useFormatters'
-
+import { supabase } from '@/lib/supabase'
 const router = useRouter()
 const carrinhoStore = useCarrinhoStore()
-const authStore = useAuthStore() // <-- Faltava declarar
+const authStore = useAuthStore()
 const { formatarPreco } = useFormatters()
 
 const form = ref({
-  nome: '',
-  endereco: '',
-  cidade: '',
-  estado: '',
-  cep: '',
-  metodo: 'cartao',
-  numeroCartao: '',
-  nomeCartao: '',
-  validade: '',
-  cvv: ''
+  nome: '', endereco: '', cidade: '', estado: '', cep: '',
+  metodo: 'cartao', numeroCartao: '', nomeCartao: '', validade: '', cvv: ''
 })
 
-const processarPagamento = () => {
+const processarPagamento = async () => { // <-- Agora é async
   if (carrinhoStore.itens.length === 0) {
     alert('Seu carrinho está vazio!')
     return
@@ -41,14 +33,19 @@ const processarPagamento = () => {
     data: new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }),
     total: carrinhoStore.subtotal,
     status: 'Aprovado',
-    itens: [...carrinhoStore.itens],
+    itens: carrinhoStore.itens, // Removemos os [...] pois o Supabase aceita o array direto no JSONB
     endereco: form.value.endereco,
     metodoPagamento: form.value.metodo === 'cartao' ? 'Cartão de Crédito' : 'PIX'
   }
 
-  const pedidosAntigos = JSON.parse(localStorage.getItem('db_pedidos_bevshop') ?? '[]')
-  pedidosAntigos.unshift(novoPedido)
-  localStorage.setItem('db_pedidos_bevshop', JSON.stringify(pedidosAntigos))
+  // --- MÁGICA DO SUPABASE AQUI ---
+  // Tenta inserir o pedido no banco de dados
+  const { error } = await supabase.from('pedidos').insert([novoPedido])
+
+  if (error) {
+    alert('Ocorreu um erro ao processar seu pedido no banco de dados: ' + error.message)
+    return
+  }
 
   alert('Pagamento aprovado! O seu pedido foi realizado com sucesso.')
   carrinhoStore.limpar() 

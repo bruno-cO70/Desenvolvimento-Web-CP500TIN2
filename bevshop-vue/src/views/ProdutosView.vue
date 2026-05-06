@@ -5,7 +5,8 @@ import type { FiltroCategoria, OrdenacaoTipo, Produto } from '@/types'
 import ProductCard from '@/components/ProductCard.vue'
 import ProductDetailModal from '@/components/ProductDetailModal.vue'
 import { useSmartSearch } from '@/composables/useSmartSearch'
-import { getCatalogoProdutos, sincronizarProdutosLojaComSupabase } from '@/data/catalogo'
+import { getCatalogoProdutos } from '@/data/catalogo'
+import { supabase } from '@/lib/supabase' // <-- Importando o banco de dados
 
 const route = useRoute()
 
@@ -27,19 +28,46 @@ const categorias: { value: FiltroCategoria; label: string }[] = [
   { value: 'sem-alcool', label: 'Sem Álcool' },
 ]
 
-onMounted(() => {
-  todosOsProdutos.value = getCatalogoProdutos()
+// FUNÇÃO NOVA: Busca os produtos direto da nuvem!
+const buscarProdutosDoSupabase = async () => {
+  const { data, error } = await supabase.from('produtos_loja').select('*')
+  
+  if (error) {
+    console.error('Erro ao buscar produtos da nuvem:', error)
+    // Se der erro de internet, aciona o Plano B e puxa o arquivo local
+    todosOsProdutos.value = getCatalogoProdutos() 
+  } else if (data) {
+    // Mapeamos os dados do banco (snake_case) para o formato do site (camelCase)
+    todosOsProdutos.value = data.map(p => ({
+      id: p.id,
+      nome: p.nome,
+      categoria: p.categoria,
+      label: p.label,
+      preco: p.preco,
+      precoAntigo: p.preco_antigo, // Convertendo de volta
+      tag: p.tag,
+      img: p.img,
+      descricao: p.descricao,
+      origem: p.origem,
+      regiao: p.regiao,
+      pais: p.pais,
+      alcool: p.alcool,
+      volume: p.volume,
+      uvasPrincipais: p.uvas_principais, // Convertendo de volta
+      notas: p.notas,
+      harmonizacao: p.harmonizacao,
+      temperatura: p.temperatura,
+      processo: p.processo,
+      envelhecimento: p.envelhecimento
+    }))
+  }
+}
 
+onMounted(() => {
   const busca = route.query.busca as string
   if (busca) termoBusca.value = busca
 
-  sincronizarProdutosLojaComSupabase()
-    .then(() => {
-      todosOsProdutos.value = getCatalogoProdutos()
-    })
-    .catch(() => {
-      // Mantem o catalogo local quando a sincronizacao remota falhar.
-    })
+  buscarProdutosDoSupabase() // <-- Puxa do banco assim que a tela abre
 })
 
 watch(() => route.query.busca, (val) => {
@@ -56,8 +84,27 @@ const produtosFiltrados = computed(() => {
   const termo = termoBusca.value.trim()
   let lista = termo ? rankProducts(listaBase, termo).map(item => item.produto) : listaBase
 
-  if (ordenacao.value === 'menor') lista = [...lista].sort((a, b) => a.preco - b.preco)
-  if (ordenacao.value === 'maior') lista = [...lista].sort((a, b) => b.preco - a.preco)
+  // Ordem oficial das categorias na vitrine
+  const ordemCategorias: Record<string, number> = {
+    'vinho': 1,
+    'destilados': 2,
+    'cerveja': 3,
+    'sem-alcool': 4
+  }
+
+  if (ordenacao.value === 'relevancia' && !termo) {
+    // Agrupa por categoria e desempatar em ordem alfabética
+    lista = [...lista].sort((a, b) => {
+      const diffCategoria = (ordemCategorias[a.categoria] || 99) - (ordemCategorias[b.categoria] || 99)
+      if (diffCategoria !== 0) return diffCategoria // Se forem categorias diferentes, agrupa
+      
+      return a.nome.localeCompare(b.nome) // Se for a mesma categoria, ordena A-Z
+    })
+  } else if (ordenacao.value === 'menor') {
+    lista = [...lista].sort((a, b) => a.preco - b.preco)
+  } else if (ordenacao.value === 'maior') {
+    lista = [...lista].sort((a, b) => b.preco - a.preco)
+  }
 
   return lista
 })
