@@ -79,7 +79,7 @@ const processarPagamento = async () => {
     }
 
     const response = await fetch(
-      'http://localhost:4242/create-checkout-session',
+      `${import.meta.env.VITE_API_URL}/create-checkout-session`,
       {
         method: 'POST',
         headers: {
