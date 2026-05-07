@@ -121,6 +121,7 @@ const processarPagamento = async () => {
 
     <form @submit.prevent="processarPagamento" class="flex flex-col lg:flex-row gap-10">
       <div class="flex-1 space-y-8">
+        
         <section class="bg-slate-800/50 p-6 rounded-xl border border-slate-700">
           <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
             <span class="material-symbols-outlined text-[#d4af37]">local_shipping</span>
@@ -131,12 +132,14 @@ const processarPagamento = async () => {
             <input
               v-model="form.nome"
               required
+              autocomplete="name"
               class="bg-slate-900 border-slate-700 rounded-lg p-3 w-full"
               placeholder="Nome Completo"
             />
             <input
               v-model="form.endereco"
               required
+              autocomplete="street-address"
               class="bg-slate-900 border-slate-700 rounded-lg p-3 w-full"
               placeholder="Endereço Completo"
             />
@@ -191,9 +194,14 @@ const processarPagamento = async () => {
           <h2 class="text-xl font-bold mb-6">Resumo do Pedido</h2>
 
           <div class="space-y-4 mb-6 max-h-60 overflow-y-auto pr-2">
-            <div v-for="item in carrinhoStore.itens" :key="item.id" class="flex justify-between items-center text-sm">
-              <span class="text-slate-300">{{ item.quantidade }}x {{ item.nome }}</span>
-              <span class="font-medium">{{ formatarPreco(item.preco * item.quantidade) }}</span>
+            <div v-for="item in carrinhoStore.itens" :key="item.id" class="flex items-center gap-3 text-sm">
+              <img :src="item.img" :alt="item.nome" class="w-12 h-12 rounded object-cover bg-white/5 p-1 border border-slate-700" />
+              
+              <div class="flex-1">
+                <span class="text-slate-300 block line-clamp-2">{{ item.quantidade }}x {{ item.nome }}</span>
+              </div>
+              
+              <span class="font-medium whitespace-nowrap">{{ formatarPreco(item.preco * item.quantidade) }}</span>
             </div>
           </div>
 
