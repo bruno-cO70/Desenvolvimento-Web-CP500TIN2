@@ -1,47 +1,45 @@
-# 🚀 Desenvolvimento Web - CP500TIN2
+# 🚀 Desenvolvimento Web - CP500TIN2 | Projeto BevShop
 
-Este repositório contém os projetos, exercícios e desafios desenvolvidos durante a disciplina de **Desenvolvimento Web** (Turma CP500TIN2). O foco principal é o aprendizado de tecnologias front-end e a construção de interfaces modernas, responsivas e semânticas.
+Este repositório documenta a evolução técnica durante a disciplina de **Desenvolvimento Web** (Turma CP500TIN2). O que começou com a estruturação básica de páginas HTML evoluiu para a construção de uma aplicação Full-Stack completa e moderna: a **BevShop**.
 
-## 📌 Sobre o Projeto
+## 🍷 Sobre o Projeto Principal (BevShop)
 
-O objetivo deste repositório é documentar a evolução técnica no ecossistema Web, cobrindo desde a estruturação básica com HTML até a estilização avançada e manipulação de comportamento com JavaScript.
+A **BevShop** é um e-commerce de bebidas premium desenvolvido como projeto prático para consolidar os conhecimentos da disciplina. A aplicação simula uma experiência de compra real, desde a seleção de produtos no carrinho até o checkout seguro com integração de pagamentos e registro no banco de dados.
+
+### ✨ Principais Funcionalidades
+* Catálogo dinâmico de produtos.
+* Gerenciamento de estado (Carrinho de compras inteligente).
+* Checkout integrado com a API do **Stripe** (simulação de cartão de crédito e PIX).
+* Banco de dados em nuvem para registro do histórico de pedidos.
 
 ---
 
-## 🛠️ Tecnologias Utilizadas
+## 🛠️ Tecnologias e Arquitetura
 
-Abaixo estão as principais ferramentas e linguagens exploradas neste curso:
+O projeto foi dividido em Front-end e Back-end, utilizando o que há de mais moderno no ecossistema JavaScript:
 
-* **HTML5:** Estruturação semântica de páginas.
-* **CSS3:** Estilização, Flexbox, Grid e Responsividade (Mobile First).
-* **JavaScript (ES6+):** Manipulação de DOM, eventos e lógica de programação.
-* **Git & GitHub:** Versionamento de código e boas práticas de commit.
+**Front-end (Interface da Loja):**
+* **Vue.js 3 & TypeScript:** Criação de interfaces reativas e tipagem segura.
+* **Vite:** Ferramenta de build super rápida.
+* **Tailwind CSS:** Estilização moderna, responsiva e direta no HTML.
+* **Pinia & Vue Router:** Gerenciamento do carrinho e navegação entre páginas.
+
+**Back-end & Infraestrutura:**
+* **Node.js & Express:** Servidor back-end para processar a lógica de pagamentos de forma segura.
+* **Supabase:** Banco de dados relacional (BaaS) para armazenar os pedidos dos clientes.
+* **Stripe API:** Gateway de processamento de pagamentos.
+
+**Deploy (Hospedagem):**
+* **Vercel:** Hospedagem do Front-end.
+* **Render:** Hospedagem do Servidor Back-end.
 
 ---
 
 ## 📂 Estrutura do Repositório
 
-Organizado por módulos ou aulas para facilitar a consulta:
+O repositório está organizado para separar a interface do servidor:
 
 ```text
-├── Aula-01/           # Introdução ao HTML
-├── Aula-02/           # Seletores CSS e Box Model
-├── Desafios/          # Projetos práticos de avaliação
-└── assets/            # Imagens e recursos globais
-```
-
----
-
-## 🚀 Como Executar os Projetos
-
-Para visualizar os projetos localmente:
-
-1.  **Clone este repositório:**
-    ```bash
-    git clone https://github.com/bruno-cO70/Desenvolvimento-Web-CP500TIN2.git
-    ```
-2.  **Navegue até a pasta desejada:**
-    ```bash
-    cd Desenvolvimento-Web-CP500TIN2/NOME-DA-AULA
-    ```
-3.  **Abra o arquivo `index.html`** no seu navegador de preferência ou utilize a extensão **Live Server** no VS Code.
+├── bevshop-vue/          # Código fonte do Front-end (Loja)
+├── bevshop-api/          # Servidor Node.js para processar o Stripe
+└── aulas-anteriores/     # Exercícios práticos de introdução ao HTML/CSS
