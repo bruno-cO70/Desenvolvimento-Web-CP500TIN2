@@ -79,7 +79,7 @@ const processarPagamento = async () => {
     }
 
     const response = await fetch(
-      `${import.meta.env.VITE_API_URL}/create-checkout-session`,
+      'https://desenvolvimento-web-cp500tin2.onrender.com/create-checkout-session',
       {
         method: 'POST',
         headers: {
